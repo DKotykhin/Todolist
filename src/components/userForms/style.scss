@@ -1,0 +1,64 @@
+.form {
+    .title {
+        font-size: 22px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    .loading {
+        text-align: center;
+        font-size: 18px;
+    }
+    .submitbutton {
+        color: #00a1b6;
+        margin-bottom: 20px;
+    }
+    .subtitle {
+        text-align: center;
+    }
+    .error_title {
+        text-align: center;
+        margin-bottom: 30px;
+        color: red;
+    }
+    .regbutton {
+        display: block;
+        // margin: 30px auto;
+        color: #00a1b6;
+        text-align: center;
+    }
+}
+
+.profile_form {
+    .profile_box {
+        text-align: center;
+    }
+    .field {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+    .title {
+        font-size: 22px;
+        margin-top: 50px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    .subtitle {
+        text-align: center;
+    }
+    .save_button {
+        margin-top: 20px;
+        margin-bottom: 50px;
+    }
+    .delete {
+        display: block;
+        margin: 30px auto;
+        width: 150px;
+    }
+    label {
+        color: grey;
+        text-align: left;
+        margin-left: 40px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}
