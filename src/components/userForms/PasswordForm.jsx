@@ -45,12 +45,15 @@ function PasswordForm() {
 
     return (
         <Container maxWidth="md" className="form">
+            <Typography className="title" component="h2">
+                {'Change password'}
+            </Typography>
             <Box
                 onSubmit={handleSubmit(onSubmit)}
                 component="form"
                 sx={{
                     "& > :not(style)": {
-                        width: "25ch",
+                        width: "38ch",
                         display: "block",
                         m: "50px auto",
                     },
@@ -58,9 +61,6 @@ function PasswordForm() {
                 noValidate
                 autoComplete="off"
             >
-                <Typography className="title" component="h2">
-                    {'Change password'}
-                </Typography>
                 <Controller
                     name="password"
                     control={control}
