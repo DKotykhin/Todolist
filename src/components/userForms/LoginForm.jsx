@@ -41,13 +41,16 @@ function LoginForm() {
     };
 
     return (
-        <Container maxWidth="md" className="form">
+        <Container maxWidth="xs" className="form">
+            <Typography className="title" component="h2">
+                {'Login'}
+            </Typography>
             <Box
                 onSubmit={handleSubmit(onSubmit)}
                 component="form"
                 sx={{
                     "& > :not(style)": {
-                        width: "25ch",
+                        width: "35ch",
                         display: "block",
                         m: "50px auto",
                     },
@@ -55,17 +58,14 @@ function LoginForm() {
                 noValidate
                 autoComplete="off"
             >
-                <Typography className="title" component="h2">
-                    {'Login'}
-                </Typography>
                 <Controller
                     name="email"
                     control={control}
                     render={({ field }) => (
-                        <TextField                            
+                        <TextField                           
                             error={errors.email ? true : false}
                             label="email"
-                            variant="outlined"
+                            variant="standard"
                             type="email"
                             placeholder="email"
                             helperText={errors.email?.message}
@@ -77,10 +77,10 @@ function LoginForm() {
                     name="password"
                     control={control}
                     render={({ field }) => (
-                        <TextField                            
+                        <TextField                          
                             error={errors.password ? true : false}
                             label="password"
-                            variant="outlined"
+                            variant="standard"
                             type="password"
                             placeholder="password"
                             helperText={errors.password?.message}

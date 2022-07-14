@@ -37,23 +37,22 @@ function RegisterForm() {
 
     return (
         <Container maxWidth="md" className="form">
+            <Typography className="title" component="h2">
+                {'Registration Form'}
+            </Typography>
             <Box
                 onSubmit={handleSubmit(onSubmit)}
                 component="form"
                 sx={{
                     "& > :not(style)": {
-                        width: "25ch",
+                        width: "35ch",
                         display: "block",
                         m: "50px auto",
                     },
-                }}
-                className="form"
+                }}                
                 noValidate
                 autoComplete="off"
             >                
-                <Typography className="title" component="h2">
-                    {'Registration Form'}
-                </Typography>
                 <Controller
                     name="name"
                     control={control}
@@ -61,7 +60,7 @@ function RegisterForm() {
                         <TextField                           
                             error={errors.name ? true : false}
                             label="name"
-                            variant="outlined"                           
+                            variant="standard"                           
                             placeholder="your name"
                             helperText={errors.name?.message}
                             {...field}
@@ -75,7 +74,7 @@ function RegisterForm() {
                         <TextField                            
                             error={errors.email ? true : false}
                             label="email"
-                            variant="outlined"
+                            variant="standard"
                             type="email"
                             placeholder="your email"
                             helperText={errors.email?.message}
@@ -90,7 +89,7 @@ function RegisterForm() {
                         <TextField                            
                             error={errors.password ? true : false}
                             label="password"
-                            variant="outlined"
+                            variant="standard"
                             type="password"
                             placeholder="enter password"
                             helperText={errors.password?.message}

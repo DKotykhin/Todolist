@@ -1,16 +1,23 @@
 .form {
     .title {
         font-size: 22px;
-        margin-bottom: 30px;
+        margin-top: 50px;
         text-align: center;
+    }
+    input {
+        width: 300px;
+        // width: 80vw;
+        // max-width: 300px;
     }
     .loading {
         text-align: center;
         font-size: 18px;
     }
     .submitbutton {
+        display: block;
         color: #00a1b6;
-        margin-bottom: 20px;
+        margin: 10px auto;
+        margin-bottom: 50px;
     }
     .subtitle {
         text-align: center;
