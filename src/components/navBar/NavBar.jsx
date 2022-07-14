@@ -97,7 +97,7 @@ const NavBar = () => {
                                 >
                                     <Avatar
                                         alt={username || "TodoList"}
-                                        src="./logo192.png"
+                                        src="./logo.png"
                                     />
                                 </IconButton>
                             </Tooltip>
