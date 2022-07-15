@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
@@ -17,19 +18,25 @@ const AvatarForm = () => {
         handleSubmit,
         // formState: { errors },
     } = useForm();
-    const [loadedAvatar, setLoadedAvatar] = useState(false)
-    const [deletedAvatar, setDeletedAvatar] = useState(false)
+    const [loadedAvatar, setLoadedAvatar] = useState(false);
+    const [deletedAvatar, setDeletedAvatar] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoadedAvatar(false);
+            setDeletedAvatar(false);
+        }, 4000);
+        return () => clearTimeout(timer);
+    }, [loadedAvatar, deletedAvatar]);
 
     const onSubmit = (data) => {
-        setLoadedAvatar(false);
-        setDeletedAvatar(false)
         var formData = new FormData();
         formData.append("avatar", data.avatar[0]);
         UploadAvatar(formData, userdata.token)
             .then(function (response) {
                 console.log(response.data);
-                setLoadedAvatar(true)
-                reset()
+                setLoadedAvatar(true);
+                reset();
             })
             .catch(function (error) {
                 console.log(error.message);
@@ -38,16 +45,16 @@ const AvatarForm = () => {
 
     const handleDelete = () => {
         setLoadedAvatar(false);
-        setDeletedAvatar(false)
+        setDeletedAvatar(false);
         DeleteAvatar(userdata.token)
-        .then(function (response) {
-            console.log(response.data);
-            setDeletedAvatar(true)
-        })
-        .catch(function (error) {
-            console.log(error.message);
-        }); 
-    }
+            .then(function (response) {
+                console.log(response.data);
+                setDeletedAvatar(true);
+            })
+            .catch(function (error) {
+                console.log(error.message);
+            });
+    };
 
     return (
         <Container maxWidth="xs" className="profile_form">
@@ -58,40 +65,40 @@ const AvatarForm = () => {
                     "& > :not(style)": {
                         width: "30ch",
                         display: "block",
-                        m: "30px auto",
+                        m: "20px auto",
                     },
                 }}
                 noValidate
                 autoComplete="off"
-                >               
-                <Typography sx={{cursor: 'pointer'}}
-                    component='input'                    
-                    {...register("avatar")} 
-                    color='primary'
-                    type="file"                    
-                />                            
+            >
+                <Typography
+                    sx={{ cursor: "pointer" }}
+                    component="input"
+                    {...register("avatar")}
+                    color="primary"
+                    type="file"
+                />
                 <Button
                     type="submit"
-                    variant="outlined"
-                    className="save_button"
+                    variant="outlined"                                    
                 >
                     Upload
                 </Button>
-            </Box>
-            {loadedAvatar && 
-            <Typography color='primary' sx={{textAlign: 'center', mb: 5}}>{'Avatar loaded succesfully'}</Typography>
-            }
-            <Button 
+            </Box>            
+                <Typography color="primary" sx={{ textAlign: "center", minHeight: '25px' }}>
+                    {loadedAvatar ? "Avatar loaded succesfully" : ''}
+                </Typography>           
+            <Button
                 onClick={handleDelete}
                 variant="outlined"
                 color="error"
-                sx={{display: 'block', margin: '20px auto', mt:5}}
+                sx={{ display: "block", margin: "20px auto" }}
             >
                 Delete Avatar
-            </Button>
-            {deletedAvatar &&
-                <Typography color='error' sx={{textAlign: 'center', mb: 5}}>{'Avatar deleted succesfully'}</Typography>
-            }
+            </Button>            
+                <Typography color="error" sx={{ textAlign: "center", minHeight: '25px' }}>
+                    {deletedAvatar ? "Avatar deleted succesfully" : ''}
+                </Typography>            
         </Container>
     );
 };

@@ -52,6 +52,11 @@ const passwordschema = yup.object({
         .min(8, 'Минимум 8 символов для заполнения')
 });
 
+const addtaskschema = yup.object({
+    title: yup.string()
+        .min(2, 'Минимум 2 символа для заполнения')
+        .required('Обязательное поле!'),
+});
 
 export const RegisterFormValidation = {
     defaultValues: {
@@ -87,5 +92,13 @@ export const PasswordFormValidation = {
         confirmpassword: ''
     },
     resolver: yupResolver(passwordschema),
+    mode: 'onBlur'
+}
+
+export const AddTaskFormValidation = {
+    defaultValues: {
+        title: ''
+    },
+    resolver: yupResolver(addtaskschema),
     mode: 'onBlur'
 }

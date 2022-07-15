@@ -15,6 +15,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import { UpdateTask } from "api/taskrequests";
 import { updateTaskAll } from "store/taskSlice";
+import { AddTaskFormValidation } from "components/userForms/FormValidation";
 
 import "./style.scss";
 
@@ -23,7 +24,12 @@ function UpdateTaskForm({ props, handleClose }) {
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
 
-    const { control, handleSubmit, reset } = useForm();
+    const {
+        control,
+        handleSubmit,
+        reset,
+        formState: { errors, isValid },
+    } = useForm(AddTaskFormValidation);
 
     const title = props.description.split("&#9000;")[0];
     const subtitle = props.description.split("&#9000;")[1];
@@ -41,9 +47,9 @@ function UpdateTaskForm({ props, handleClose }) {
         const newData = {
             description: data.title.concat(
                 "&#9000;",
-                data.subtitle,
+                data.subtitle ? data.subtitle : "",
                 "&#9000;",
-                data.desc
+                data.desc ? data.desc : ""
             ),
             completed: data.completed || false,
         };
@@ -77,6 +83,8 @@ function UpdateTaskForm({ props, handleClose }) {
                         <TextField
                             className="field"
                             {...field}
+                            error={errors.title ? true : false}
+                            helperText={errors.title?.message}
                             multiline
                             maxRows={2}
                             label="title"
@@ -130,10 +138,14 @@ function UpdateTaskForm({ props, handleClose }) {
                     />
                     Completed
                 </InputLabel>
-                {loading && (
-                    <Typography className="loading">Loading...</Typography>
-                )}
-                <Button className="submitbutton" type="submit">
+                <Typography className="loading">
+                    {loading ? "Loading..." : ""}
+                </Typography>
+                <Button
+                    className="submitbutton"
+                    type="submit"
+                    disabled={!isValid}
+                >
                     Update Task
                 </Button>
             </Box>

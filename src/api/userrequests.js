@@ -2,10 +2,12 @@ import axios from 'axios'
 
 const Base_URL = 'https://api-nodejs-todolist.herokuapp.com/';
 
+axios.defaults.baseURL = Base_URL
+
 export const GetLogin = async(data) => {
     const config = {
         method: 'POST',
-        url: `${Base_URL}user/login`,
+        url: 'user/login',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -16,24 +18,24 @@ export const GetLogin = async(data) => {
     return result;
 }
 
-export const GetRegister = (data) => {
+export const GetRegister = async(data) => {
     const config = {
         method: 'POST',
-        url: `${Base_URL}user/register`,
+        url: 'user/register',
         headers: {
             'Content-Type': 'application/json'
         },
         data: JSON.stringify(data)
     };
 
-    const result = axios(config);
+    const result = await axios(config);
     return result;
 }
 
 export const UpdateUser = async(data, token) => {
     const config = {
         method: 'PUT',
-        url: `${Base_URL}user/me`,
+        url: 'user/me',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': token
@@ -48,7 +50,7 @@ export const UpdateUser = async(data, token) => {
 export const DeleteUser = async(token) => {
     const config = {
         method: 'DELETE',
-        url: `${Base_URL}user/me`,
+        url: 'user/me',
         headers: {
             'Authorization': token
         }
@@ -61,7 +63,7 @@ export const DeleteUser = async(token) => {
 export const UploadAvatar = async(data, token) => {
     const config = {
         method: 'POST',
-        url: `${Base_URL}user/me/avatar`,
+        url: 'user/me/avatar',
         headers: {
             'Authorization': token,
         },
@@ -75,7 +77,7 @@ export const UploadAvatar = async(data, token) => {
 export const GetAvatar = async(id) => {
     const config = {
         method: 'GET',
-        url: `${Base_URL}user/${id}/avatar`,
+        url: `user/${id}/avatar`,
         headers: {},
     };
 
@@ -86,7 +88,7 @@ export const GetAvatar = async(id) => {
 export const DeleteAvatar = async(token) => {
     const config = {
         method: 'DELETE',
-        url: `${Base_URL}user/me/avatar`,
+        url: 'user/me/avatar',
         headers: {
             'Authorization': token,
         }

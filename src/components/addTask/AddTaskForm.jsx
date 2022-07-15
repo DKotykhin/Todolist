@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
 
@@ -8,23 +8,37 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import { AddTask } from "api/taskrequests";
 import { addTask } from "store/taskSlice";
+import { AddTaskFormValidation } from "components/userForms/FormValidation";
 
 import "./style.scss";
 
 function AddTaskForm({ handleClose }) {
     const { userdata } = useSelector((state) => state.user);
     const [loading, setLoading] = useState(false);
+    const [loaded, setLoaded] = useState(false);
     const dispatch = useDispatch();
 
-    const { control, handleSubmit, reset } = useForm();
+    const {
+        control,
+        handleSubmit,
+        reset,
+        formState: { errors, isValid },
+    } = useForm(AddTaskFormValidation);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoaded(false);
+        }, 4000);
+        return () => clearTimeout(timer);
+    }, [loaded]);
 
     const onSubmit = (data) => {
         const newData = {
             description: data.title.concat(
                 "&#9000;",
-                data.subtitle,
+                data.subtitle ? data.subtitle : "",
                 "&#9000;",
-                data.desc
+                data.desc ? data.desc : ""
             ),
         };
         setLoading(true);
@@ -33,6 +47,7 @@ function AddTaskForm({ handleClose }) {
                 dispatch(addTask(response.data.data));
                 reset();
                 setLoading(false);
+                setLoaded(true);
             })
             .catch(function (error) {
                 console.log(error.response.data);
@@ -56,6 +71,8 @@ function AddTaskForm({ handleClose }) {
                         <TextField
                             className="field"
                             {...field}
+                            error={errors.title ? true : false}
+                            helperText={errors.title?.message}
                             multiline
                             maxRows={2}
                             label="title"
@@ -96,10 +113,15 @@ function AddTaskForm({ handleClose }) {
                         />
                     )}
                 />
-                {loading && (
-                    <Typography className="loading">Loading...</Typography>
-                )}
-                <Button className="submitbutton" type="submit">
+                <Typography className="loading">
+                    {loading ? "Loading..." : ""}
+                    {loaded ? "Task add successfully!" : ""}
+                </Typography>
+                <Button
+                    className="submitbutton"
+                    type="submit"
+                    disabled={!isValid}
+                >
                     Add Task
                 </Button>
             </Box>

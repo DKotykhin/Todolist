@@ -38,7 +38,8 @@ export default function BasicCard({ props, handleDelete, handleComplete, handleU
                 <Typography
                     variant="subtitle1"
                     color="text.secondary"
-                    gutterBottom
+                    sx={{minHeight: '28px'}}
+                    // gutterBottom
                 >
                     {subtitle}
                 </Typography>
