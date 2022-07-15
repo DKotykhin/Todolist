@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import PropTypes from "prop-types";
 
-import { Box, Typography, Tab, Tabs } from "@mui/material";
+import { Box, Typography, Tab, Tabs, Container } from "@mui/material";
 
 import { GetAllTasks } from "api/taskrequests";
 import { createTasks } from "store/taskSlice";
@@ -23,7 +23,7 @@ function TabPanel(props) {
         >
             {value === index && (
                 <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
+                    <Box>{children}</Box>
                 </Box>
             )}
         </div>
@@ -76,7 +76,7 @@ export default function TaskList() {
     };
 
     return (
-        <Box sx={{ width: "100%" }}>            
+        <Container maxWidth='xl'>            
             {loading && (
                 <Typography sx={{ textAlign: "center", m: 1 }}>
                     Loading...
@@ -94,7 +94,7 @@ export default function TaskList() {
                 </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-                <CardList title={"All Tasks"} taskdata={taskdata} />
+                <CardList title={"All Tasks"} taskdata={taskdata} />               
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <CardList title={"Active Tasks"} taskdata={activeTasks} />
@@ -102,6 +102,6 @@ export default function TaskList() {
             <TabPanel value={value} index={2}>
                 <CardList title={"Completed Tasks"} taskdata={completedTasks} />
             </TabPanel>
-        </Box>
+        </Container>
     );
 }

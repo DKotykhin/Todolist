@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -16,19 +16,34 @@ import Tooltip from "@mui/material/Tooltip";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 
 import { removeUser } from "store/userSlice";
+import { GetAvatar } from "api/userrequests";
 
 import "./style.scss";
 
 const settings = ["Profile", "Change password", "Logout"];
 
 const NavBar = () => {
+    const [anchorElUser, setAnchorElUser] = useState(null);
+    const [avatar, setAvatar] = useState(null);
+    const { userdata } = useSelector((state) => state.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const { userdata } = useSelector((state) => state.user);
     const username = userdata.token ? userdata.user.name : "";
+    const userid = userdata.token ? userdata.user._id : "";
 
-    const [anchorElUser, setAnchorElUser] = useState(null);
+    useEffect(() => {
+        if (userid) {
+            GetAvatar(userid)
+                .then(response => {
+                    // console.log(response.data)
+                    setAvatar(response.data);
+                })
+                .catch(function (error) {
+                    console.log(error.message);
+                });
+        }
+    }, [userid]);
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -97,7 +112,7 @@ const NavBar = () => {
                                 >
                                     <Avatar
                                         alt={username || "TodoList"}
-                                        src="./logo.png"
+                                        src={avatar}
                                     />
                                 </IconButton>
                             </Tooltip>

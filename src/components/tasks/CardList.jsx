@@ -68,7 +68,7 @@ const CardList = ({ taskdata }) => {
     };
 
     return (
-        <Container>           
+        <Container maxWidth='xl'>           
             <Modal
                 open={open}
                 onClose={handleClose}

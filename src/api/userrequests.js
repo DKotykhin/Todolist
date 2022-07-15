@@ -57,3 +57,41 @@ export const DeleteUser = async(token) => {
     const result = await axios(config);
     return result;
 }
+
+export const UploadAvatar = async(data, token) => {
+    const config = {
+        method: 'POST',
+        url: `${Base_URL}user/me/avatar`,
+        headers: {
+            'Authorization': token,
+        },
+        data: data
+    };
+
+    const result = await axios(config);
+    return result;
+}
+
+export const GetAvatar = async(id) => {
+    const config = {
+        method: 'GET',
+        url: `${Base_URL}user/${id}/avatar`,
+        headers: {},
+    };
+
+    const result = await axios(config);
+    return result;
+}
+
+export const DeleteAvatar = async(token) => {
+    const config = {
+        method: 'DELETE',
+        url: `${Base_URL}user/me/avatar`,
+        headers: {
+            'Authorization': token,
+        }
+    };
+
+    const result = await axios(config);
+    return result;
+}

@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField";
 
 import { DeleteUser, UpdateUser } from "api/userrequests";
 import { ProfileFormValidation } from "./FormValidation";
+import AvatarForm from "./AvatarForm";
 
 import './style.scss'
 
@@ -56,6 +57,9 @@ const ProfileForm = () => {
 
     return (
         <Container maxWidth='xs' className="profile_form">            
+            <Typography className="title" component="h2">
+                User Profile
+            </Typography>
             <Box className="profile_box"
                 onSubmit={handleSubmit(onSubmit)}
                 component="form"
@@ -69,9 +73,6 @@ const ProfileForm = () => {
                 noValidate
                 autoComplete="off"
             >
-                <Typography className="title" component="h2">
-                    User Profile
-                </Typography>
                 <Box>
                     <InputLabel>Email</InputLabel>                    
                     <Controller
@@ -95,9 +96,7 @@ const ProfileForm = () => {
                     control={control}
                     render={({ field }) => (
                         <TextField className="field"
-                            {...field}
-                            multiline
-                            maxRows={2}
+                            {...field}                            
                             error={errors.name ? true : false}                            
                             variant="standard"                           
                             placeholder="your name"
@@ -123,7 +122,8 @@ const ProfileForm = () => {
                 />
                 </Box>
                 <Button type="submit" variant="outlined" className="save_button">Save changes</Button>
-            </Box>                
+            </Box>
+            <AvatarForm />                
             <Typography className="subtitle">
                 Need to delete Profile?
             </Typography>

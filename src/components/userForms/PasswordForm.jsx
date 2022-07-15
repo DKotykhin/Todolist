@@ -53,7 +53,7 @@ function PasswordForm() {
                 component="form"
                 sx={{
                     "& > :not(style)": {
-                        width: "38ch",
+                        width: "35ch",
                         display: "block",
                         m: "50px auto",
                     },
