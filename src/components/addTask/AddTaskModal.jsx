@@ -16,7 +16,7 @@ const style = {
     p: 2,
 };
 
-export default function ModalAdd() {
+export default function AddTaskModal() {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
 

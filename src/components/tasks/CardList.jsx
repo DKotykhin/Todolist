@@ -7,7 +7,7 @@ import { DeleteTask, UpdateTask } from "api/taskrequests";
 import { removeTask, updateTaskCompleted } from "store/taskSlice";
 
 import BasicCard from "components/tasks/Card";
-import ModalAdd from "components/addTask/ModalAdd";
+import AddTaskModal from "components/addTask/AddTaskModal";
 import UpdateTaskForm from "components/updateTask/UpdateTaskForm";
 
 const style = {
@@ -80,7 +80,7 @@ const CardList = ({ taskdata }) => {
                 </Box>
             </Modal>
             <Box sx={{ textAlign: "center" }}>
-                <ModalAdd />
+                <AddTaskModal />
             </Box>
             {loading ? (
                 <Typography

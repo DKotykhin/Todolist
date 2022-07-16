@@ -29,9 +29,9 @@ const AvatarForm = () => {
         return () => clearTimeout(timer);
     }, [loadedAvatar, deletedAvatar]);
 
-    const onSubmit = (data) => {
+    const onSubmit = (data) => {        
         var formData = new FormData();
-        formData.append("avatar", data.avatar[0]);
+        formData.append("avatar", data.avatar[0], data.avatar[0].name);
         UploadAvatar(formData, userdata.token)
             .then(function (response) {
                 console.log(response.data);

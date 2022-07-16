@@ -26,7 +26,7 @@ function RegisterForm() {
         GetRegister(data)
             .then(function (response) {
                 navigate("/login");
-                console.log("User", response.data.name, "has been added");
+                console.log("User", response.data.user.name, "has been added");
                 reset();
             })
             .catch(function (error) {

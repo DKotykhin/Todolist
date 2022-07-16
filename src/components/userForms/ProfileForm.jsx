@@ -133,7 +133,7 @@ const ProfileForm = () => {
                 variant="contained"
                 className="delete"
                 >
-                    Delete
+                    Delete User
             </Button>
         </Container>
     );
