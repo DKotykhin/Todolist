@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
@@ -8,19 +8,17 @@ import { Box } from "@mui/system";
 import { UploadAvatar, DeleteAvatar } from "api/userrequests";
 
 import "./style.scss";
-import { useState } from "react";
 
 const AvatarForm = () => {
     const { userdata } = useSelector((state) => state.user);
     const {
         register,
         reset,
-        handleSubmit,
-        // formState: { errors },
+        handleSubmit,        
     } = useForm();
     const [loadedAvatar, setLoadedAvatar] = useState(false);
     const [deletedAvatar, setDeletedAvatar] = useState(false);
-
+    
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoadedAvatar(false);
@@ -36,7 +34,7 @@ const AvatarForm = () => {
             .then(function (response) {
                 console.log(response.data);
                 setLoadedAvatar(true);
-                reset();
+                reset();                               
             })
             .catch(function (error) {
                 console.log(error.message);
@@ -57,7 +55,7 @@ const AvatarForm = () => {
     };
 
     return (
-        <Container maxWidth="xs" className="profile_form">
+        <Container maxWidth="xs">
             <Box
                 onSubmit={handleSubmit(onSubmit)}
                 component="form"

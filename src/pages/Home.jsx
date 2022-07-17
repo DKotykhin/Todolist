@@ -1,10 +1,10 @@
-import Helmet from "react-helmet";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import Helmet from "react-helmet";
 
-import TaskList from "components/tasks/TaskList";
+import TaskList from "components/taskList/TaskList";
 
-const Home = () => {
+const Home = () => {    
     const { userdata } = useSelector((state) => state.user);
 
     return userdata.token ? (

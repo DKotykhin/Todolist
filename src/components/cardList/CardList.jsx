@@ -6,9 +6,9 @@ import { Box, Container, Typography, Grid, Modal } from "@mui/material";
 import { DeleteTask, UpdateTask } from "api/taskrequests";
 import { removeTask, updateTaskCompleted } from "store/taskSlice";
 
-import BasicCard from "components/tasks/Card";
-import AddTaskModal from "components/addTask/AddTaskModal";
-import UpdateTaskForm from "components/updateTask/UpdateTaskForm";
+import BasicCard from "components/cardList/Card";
+import AddTaskModal from "components/taskForms/AddTaskModal";
+import UpdateTaskForm from "components/taskForms/UpdateTaskForm";
 
 const style = {
     position: "absolute",

@@ -8,7 +8,7 @@ import { Box, Typography, Tab, Tabs, Container } from "@mui/material";
 import { GetAllTasks } from "api/taskrequests";
 import { createTasks } from "store/taskSlice";
 
-import CardList from "./CardList";
+import CardList from "components/cardList/CardList";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -58,7 +58,7 @@ export default function TaskList() {
         setLoading(true);
         GetAllTasks(userdata.token)
             .then(function (response) {
-                console.log(response.data);
+                // console.log('Get All Task', response.data);
                 dispatch(createTasks(response.data.data));
                 setLoading(false);
             })
@@ -78,7 +78,7 @@ export default function TaskList() {
     return (
         <Container maxWidth='xl'>            
             {loading && (
-                <Typography sx={{ textAlign: "center", m: 1 }}>
+                <Typography sx={{ textAlign: "center", marginTop: '50px', fontSize: '22px' }}>
                     Loading...
                 </Typography>
             )}

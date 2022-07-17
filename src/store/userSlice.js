@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
-    userdata: {},
+    userdata: {}
 };
 
 
@@ -25,5 +25,5 @@ const { actions, reducer } = UserSlice;
 export default reducer;
 export const {
     createUser,
-    removeUser
+    removeUser,
 } = actions;

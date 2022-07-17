@@ -11,7 +11,7 @@ import { DeleteUser, UpdateUser } from "api/userrequests";
 import { ProfileFormValidation } from "./FormValidation";
 import AvatarForm from "./AvatarForm";
 
-import './style.scss'
+import './style.scss';
 
 const ProfileForm = () => {
     const { userdata } = useSelector((state) => state.user);
@@ -56,7 +56,7 @@ const ProfileForm = () => {
     };
 
     return (
-        <Container maxWidth='xs' className="profile_form">            
+        <Container maxWidth='xs' className="profile_form">                     
             <Typography className="title" component="h2">
                 User Profile
             </Typography>

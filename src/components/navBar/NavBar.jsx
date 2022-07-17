@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -16,7 +16,7 @@ import Tooltip from "@mui/material/Tooltip";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 
 import { removeUser } from "store/userSlice";
-import { GetAvatar } from "api/userrequests";
+import { GetLogout } from "api/userrequests";
 
 import "./style.scss";
 
@@ -24,27 +24,12 @@ const settings = ["Profile", "Change password", "Logout"];
 
 const NavBar = () => {
     const [anchorElUser, setAnchorElUser] = useState(null);
-    const [avatar, setAvatar] = useState(null);
     const { userdata } = useSelector((state) => state.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const username = userdata.token ? userdata.user.name : "";
-    const userid = userdata.token ? userdata.user._id : "";
-
-    useEffect(() => {
-        if (userid) {
-            GetAvatar(userid)
-                .then(response => {
-                    // console.log(response.data)
-                    setAvatar(response.data);
-                })
-                .catch(function (error) {
-                    console.log(error.message);
-                });
-        }
-    }, [userid]);
-
+  
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
@@ -52,6 +37,18 @@ const NavBar = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const Logout = () => {
+        GetLogout(userdata.token)
+            .then(function (response) {
+                // console.log('Logout response', response)
+                dispatch(removeUser());
+                navigate("/login");
+            })
+            .catch(function (error) {
+                console.log(error.response.data);                
+            });
+    }
 
     const handleSettingMenu = (e) => {
         switch (e) {
@@ -62,8 +59,7 @@ const NavBar = () => {
                 navigate("/password");
                 break;
             case "Logout":
-                dispatch(removeUser());
-                navigate("/login");
+                Logout()
                 break;
             default:
                 navigate("/login");
@@ -109,10 +105,10 @@ const NavBar = () => {
                                 <IconButton
                                     onClick={handleOpenUserMenu}
                                     sx={{ p: 0 }}
-                                >
+                                >                                   
                                     <Avatar
                                         alt={username || "TodoList"}
-                                        src={avatar}
+                                        src={`https://api-nodejs-todolist.herokuapp.com/user/${userdata.user._id}/avatar`}
                                     />
                                 </IconButton>
                             </Tooltip>

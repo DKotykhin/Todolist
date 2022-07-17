@@ -45,7 +45,11 @@ function AddTaskForm({ handleClose }) {
         AddTask(newData, userdata.token)
             .then(function (response) {
                 dispatch(addTask(response.data.data));
-                reset();
+                reset({
+                    title: '',
+                    subtitle: '',
+                    desc: ''
+                });
                 setLoading(false);
                 setLoaded(true);
             })
