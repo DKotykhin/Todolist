@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -17,28 +17,30 @@ const style = {
     p: 4,
 };
 
-export default function DeleteUserModal({ handleDelete }) {
-    const [open, setOpen] = React.useState(false);
+export default function DeleteAvatarModal({ handleDelete }) {
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
 
     const handleClose = () => {
         setOpen(false);
     };
 
-    const handleDeleteUser = () => {
-        handleClose();
-        handleDelete()
+    const handleDeleteAvatar = () => {
+        handleDelete();
+        
+        handleClose()
+       
     }
 
     return (
-        <Box className="delete_user">
+        <Box className="delete_avatar">
             <Button
                 color="error"
-                variant="contained"
+                variant="outlined"
                 className="delete_button"
                 onClick={handleOpen}                
             >
-                {"Delete User"}
+                {"Delete Avatar"}
             </Button>
             <Modal
                 open={open}
@@ -49,15 +51,15 @@ export default function DeleteUserModal({ handleDelete }) {
                 <Box sx={style} className="delete_box">
                     <CloseIcon className="modal_close" onClick={handleClose} />
                     <Typography className="delete_title">
-                        {"You really want to delete user?"}
+                        {"You really want to delete avatar?"}
                     </Typography>
                     <Button
                         color="error"
                         variant="contained"
                         className="delete_button_modal"
-                        onClick={handleDeleteUser}                        
+                        onClick={handleDeleteAvatar}                        
                     >
-                        {"Delete User"}
+                        {"Delete Avatar"}
                     </Button>
                 </Box>
             </Modal>

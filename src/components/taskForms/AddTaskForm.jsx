@@ -9,13 +9,14 @@ import CloseIcon from "@mui/icons-material/Close";
 import { AddTask } from "api/taskrequests";
 import { addTask } from "store/taskSlice";
 import { AddTaskFormValidation } from "components/userForms/FormValidation";
+import { selectUser } from "store/selectors";
 
 import "./style.scss";
 
 function AddTaskForm({ handleClose }) {
-    const { userdata } = useSelector((state) => state.user);
     const [loading, setLoading] = useState(false);
     const [loaded, setLoaded] = useState(false);
+    const { userdata } = useSelector(selectUser);
     const dispatch = useDispatch();
 
     const {

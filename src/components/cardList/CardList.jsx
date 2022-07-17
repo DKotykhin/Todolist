@@ -5,6 +5,7 @@ import { Box, Container, Typography, Grid, Modal } from "@mui/material";
 
 import { DeleteTask, UpdateTask } from "api/taskrequests";
 import { removeTask, updateTaskCompleted } from "store/taskSlice";
+import { selectUser } from "store/selectors";
 
 import BasicCard from "components/cardList/Card";
 import AddTaskModal from "components/taskForms/AddTaskModal";
@@ -24,12 +25,12 @@ const style = {
 };
 
 const CardList = ({ taskdata }) => {
-    const { userdata } = useSelector((state) => state.user);
-    const dispatch = useDispatch();
-
-    const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [cardData, setCardData] = useState();
+    const [open, setOpen] = useState(false);
+
+    const { userdata } = useSelector(selectUser);
+    const dispatch = useDispatch();
 
     const handleClose = () => {
         setOpen(false);

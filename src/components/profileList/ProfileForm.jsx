@@ -11,13 +11,14 @@ import { DeleteUser, UpdateUser } from "api/userrequests";
 import { ProfileFormValidation } from "./ProfileFormValidation";
 import AvatarForm from "./AvatarForm";
 import DeleteUserModal from "./DeleteUserModal";
+import { selectUser } from "store/selectors";
 
 import './profilelist.scss';
 
 const ProfileForm = () => {
     const [loading, setLoading] = useState(false);
     const [loaded, setLoaded] = useState(false);
-    const { userdata } = useSelector((state) => state.user);
+    const { userdata } = useSelector(selectUser);
     const navigate = useNavigate();
 
     const {       

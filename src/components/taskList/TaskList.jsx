@@ -7,6 +7,7 @@ import { Box, Typography, Tab, Tabs, Container } from "@mui/material";
 
 import { GetAllTasks } from "api/taskrequests";
 import { createTasks } from "store/taskSlice";
+import { selectUser, selectTask } from "store/selectors";
 
 import CardList from "components/cardList/CardList";
 
@@ -47,8 +48,8 @@ export default function TaskList() {
     const [value, setValue] = useState(0);
     const [loading, setLoading] = useState(false);
     
-    const { userdata } = useSelector((state) => state.user);
-    const { taskdata } = useSelector((state) => state.task);
+    const { userdata } = useSelector(selectUser);
+    const { taskdata } = useSelector(selectTask);
     const dispatch = useDispatch();
 
     const activeTasks = taskdata.filter((task) => task.completed === false);

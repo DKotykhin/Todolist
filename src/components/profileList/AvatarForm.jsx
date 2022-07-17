@@ -6,12 +6,13 @@ import { Button, Container, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
 import { UploadAvatar, DeleteAvatar } from "api/userrequests";
-
+import DeleteAvatarModal from "./DeleteAvatarModal";
+import { selectUser } from "store/selectors";
 
 const AvatarForm = () => {
     const [loadedAvatar, setLoadedAvatar] = useState(false);
     const [deletedAvatar, setDeletedAvatar] = useState(false);
-    const { userdata } = useSelector((state) => state.user);
+    const { userdata } = useSelector(selectUser);
     
     const {
         register,
@@ -83,20 +84,13 @@ const AvatarForm = () => {
                     Upload
                 </Button>
             </Box>            
-                <Typography color="primary" sx={{ textAlign: "center", minHeight: '25px' }}>
-                    {loadedAvatar ? "Avatar loaded succesfully" : ''}
-                </Typography>           
-            <Button
-                onClick={handleDelete}
-                variant="outlined"
-                color="error"
-                sx={{ display: "block", margin: "20px auto" }}
-            >
-                Delete Avatar
-            </Button>            
-                <Typography color="error" sx={{ textAlign: "center", minHeight: '25px' }}>
-                    {deletedAvatar ? "Avatar deleted succesfully" : ''}
-                </Typography>            
+            <Typography color="primary" sx={{ textAlign: "center", minHeight: '25px' }}>
+                {loadedAvatar ? "Avatar loaded succesfully" : ''}
+            </Typography>          
+            <DeleteAvatarModal handleDelete={handleDelete}/>           
+            <Typography color="error" sx={{ textAlign: "center", minHeight: '25px' }}>
+                {deletedAvatar ? "Avatar deleted succesfully" : ''}
+            </Typography>            
         </Container>
     );
 };

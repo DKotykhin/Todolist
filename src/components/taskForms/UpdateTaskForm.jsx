@@ -16,11 +16,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import { UpdateTask } from "api/taskrequests";
 import { updateTaskAll } from "store/taskSlice";
 import { AddTaskFormValidation } from "components/userForms/FormValidation";
+import { selectUser } from "store/selectors";
 
 import "./style.scss";
 
 function UpdateTaskForm({ props, handleClose }) {
-    const { userdata } = useSelector((state) => state.user);
+    const { userdata } = useSelector(selectUser);
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
 

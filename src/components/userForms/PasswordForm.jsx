@@ -7,11 +7,12 @@ import { Box } from "@mui/system";
 
 import { UpdateUser } from "api/userrequests";
 import { PasswordFormValidation } from "./FormValidation";
+import { selectUser } from "store/selectors";
 
 import "./style.scss";
 
 function PasswordForm() {
-    const { userdata } = useSelector((state) => state.user);
+    const { userdata } = useSelector(selectUser);
     const [error, setError] = useState(false)
     const [success, setSuccess] = useState(false)
     const [matchPass, setMatchPass] = useState(false)

@@ -3,9 +3,10 @@ import { Navigate } from "react-router-dom";
 import Helmet from "react-helmet";
 
 import PasswordForm from "components/userForms/PasswordForm";
+import { selectUser } from "store/selectors";
 
 const Password = () => {
-    const { userdata } = useSelector((state) => state.user);
+    const { userdata } = useSelector(selectUser);
 
     return userdata.token ? (
         <>

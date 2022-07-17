@@ -3,9 +3,10 @@ import { Navigate } from "react-router-dom";
 import Helmet from "react-helmet";
 
 import TaskList from "components/taskList/TaskList";
+import { selectUser } from "store/selectors";
 
 const Home = () => {    
-    const { userdata } = useSelector((state) => state.user);
+    const { userdata } = useSelector(selectUser);
 
     return userdata.token ? (
         <>

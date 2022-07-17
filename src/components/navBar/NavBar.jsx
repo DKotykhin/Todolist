@@ -17,6 +17,7 @@ import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 
 import { removeUser } from "store/userSlice";
 import { GetLogout } from "api/userrequests";
+import { selectUser } from "store/selectors";
 
 import "./style.scss";
 
@@ -24,7 +25,7 @@ const settings = ["Profile", "Change password", "Logout"];
 
 const NavBar = () => {
     const [anchorElUser, setAnchorElUser] = useState(null);
-    const { userdata } = useSelector((state) => state.user);
+    const { userdata } = useSelector(selectUser);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
