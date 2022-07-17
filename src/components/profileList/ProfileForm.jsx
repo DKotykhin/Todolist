@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
@@ -10,10 +10,13 @@ import TextField from "@mui/material/TextField";
 import { DeleteUser, UpdateUser } from "api/userrequests";
 import { ProfileFormValidation } from "./ProfileFormValidation";
 import AvatarForm from "./AvatarForm";
+import DeleteUserModal from "./DeleteUserModal";
 
 import './profilelist.scss';
 
 const ProfileForm = () => {
+    const [loading, setLoading] = useState(false);
+    const [loaded, setLoaded] = useState(false);
     const { userdata } = useSelector((state) => state.user);
     const navigate = useNavigate();
 
@@ -23,6 +26,13 @@ const ProfileForm = () => {
         handleSubmit,
         formState: { errors },
     } = useForm(ProfileFormValidation);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoaded(false);
+        }, 4000);
+        return () => clearTimeout(timer);
+    }, [loaded]);
 
     useEffect(() => {
         reset({
@@ -43,16 +53,18 @@ const ProfileForm = () => {
             });
     };
 
-    const onSubmit = (data) => {        
+    const onSubmit = (data) => {
+        setLoading(true)       
         UpdateUser(data, userdata.token)
-            .then(function (response) {
-                const { data } = response;
-                // console.log(response)
-                console.log("New data: ", data);                
+            .then(function (response) {                
+                console.log("New data: ", response.data);
+                setLoaded(true)               
             })
             .catch(function (error) {
                 console.log(error.message);
-            });
+            }).finally(() => {
+                setLoading(false);
+            })
     };
 
     return (
@@ -62,14 +74,7 @@ const ProfileForm = () => {
             </Typography>
             <Box className="profile_box"
                 onSubmit={handleSubmit(onSubmit)}
-                component="form"
-                // sx={{
-                //     "& > :not(style)": {
-                //         width: '20ch',
-                //         display: "block",
-                //         m: "50px auto",
-                //     },
-                // }}
+                component="form"          
                 noValidate
                 autoComplete="off"
             >
@@ -121,20 +126,17 @@ const ProfileForm = () => {
                     )}
                 />
                 </Box>
+                <Typography className="message">
+                    {loading ? "Loading..." : ""}
+                    {loaded ? "Profile update successfully!" : ""}
+                </Typography>
                 <Button type="submit" variant="outlined" className="save_button">Save changes</Button>
             </Box>
             <AvatarForm />                
             <Typography className="subtitle">
                 Need to delete Profile?
-            </Typography>
-            <Button 
-                onClick={() => handleDelete(userdata.token)}
-                color="error"
-                variant="contained"
-                className="delete"
-                >
-                    Delete User
-            </Button>
+            </Typography>         
+            <DeleteUserModal handleDelete={() => handleDelete(userdata.token)}/>
         </Container>
     );
 };

@@ -20,16 +20,48 @@
         margin: 20px auto;
         margin-bottom: 40px;
     }
-    .delete {
-        display: block;
-        margin: 20px auto;
-        width: 150px;
-    }
     label {
         color: grey;
         text-align: left;
         margin-left: 40px;
         margin-top: 20px;
         margin-bottom: 20px;
+    }
+    .message {
+        color: #00a1b6;
+        text-align: center;
+        min-height: 25px;
+    }
+}
+
+.delete_user {
+    .delete_button {
+        display: block;
+        margin: 20px auto;
+        width: 150px;
+        margin-bottom: 100px;
+    }
+}
+
+.delete_box {
+    .delete_title {
+        text-align: center;
+        font-size: 22px;
+        margin: 25px 0;
+    }
+    .delete_button_modal {
+        display: block;
+        margin: 20px auto;
+        width: 150px;
+    }
+    .modal_close {
+        position: absolute;
+        top: 25px;
+        right: 25px;
+        color: #808080;
+        cursor: pointer;
+        &:hover {
+            color: #000;
+        }
     }
 }

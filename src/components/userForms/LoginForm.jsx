@@ -14,8 +14,7 @@ import "./style.scss";
 
 function LoginForm() {
     const [error, setError] = useState(false);
-    const [login, setLogin] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [login, setLogin] = useState(false);    
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -46,7 +45,7 @@ function LoginForm() {
     }, [dispatch, navigate]);
 
     const onSubmit = (formdata) => {
-        setLoading(true)
+        setLogin(false)
         GetLogin(formdata)
             .then(function (response) {
                 // console.log('Token: ', data.token);
@@ -61,7 +60,7 @@ function LoginForm() {
             .catch(function (error) {
                 console.log(error.response.data);
                 setError(true);
-                setLoading(false)
+                setLogin(true)
             });
     };
 
@@ -135,10 +134,7 @@ function LoginForm() {
                         <Typography className="error_title">
                             {"Incorrect data!"}
                         </Typography>
-                    )}
-                    <Typography className="loading_title">
-                        {loading ? "Loading..." : ""}
-                    </Typography>                   
+                    )}                                       
                     <Typography className="subtitle">
                         {"Don't have account?"}
                     </Typography>

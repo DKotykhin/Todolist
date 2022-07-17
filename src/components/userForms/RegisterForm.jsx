@@ -115,7 +115,7 @@ function RegisterForm() {
             </Typography>
             }
             <Typography className="loading_title">
-                        {loading ? "Loading..." : ""}
+                        {loading ? "Registered..." : ""}
                     </Typography>
             <Typography className="subtitle">{'Already have account?'}</Typography>
             <Button className="submit_button" component={Link} to="/login">

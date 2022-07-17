@@ -32,7 +32,7 @@ export default function BasicCard({
         <Card
             variant="outlined"
             sx={{
-                maxWidth: 350,
+                maxWidth: 380,
                 border: "2px solid #979797",
                 boxShadow: 24,
             }}
