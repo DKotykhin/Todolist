@@ -1,0 +1,35 @@
+.profile_form {
+    .profile_box {
+        text-align: center;
+    }
+    .field {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+    .title {
+        font-size: 22px;
+        margin-top: 50px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    .subtitle {
+        text-align: center;
+        margin-top: 50px;
+    }
+    .save_button {
+        margin: 20px auto;
+        margin-bottom: 40px;
+    }
+    .delete {
+        display: block;
+        margin: 20px auto;
+        width: 150px;
+    }
+    label {
+        color: grey;
+        text-align: left;
+        margin-left: 40px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}

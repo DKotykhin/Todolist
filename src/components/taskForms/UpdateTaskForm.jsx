@@ -90,7 +90,7 @@ function UpdateTaskForm({ props, handleClose }) {
                             label="title"
                             variant="outlined"
                             type="text"
-                            placeholder="...add title"
+                            // placeholder="...add title"
                         />
                     )}
                 />
@@ -106,7 +106,7 @@ function UpdateTaskForm({ props, handleClose }) {
                             label="subtitle"
                             variant="outlined"
                             type="text"
-                            placeholder="...add subtitle"
+                            // placeholder="...add subtitle"
                         />
                     )}
                 />
@@ -121,7 +121,7 @@ function UpdateTaskForm({ props, handleClose }) {
                             maxRows={4}
                             label="description"
                             variant="outlined"
-                            placeholder="...add description"
+                            // placeholder="...add description"
                         />
                     )}
                 />

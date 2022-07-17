@@ -2,7 +2,7 @@ import Helmet from "react-helmet";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
-import ProfileForm from "components/userForms/ProfileForm";
+import ProfileForm from "components/profileList/ProfileForm";
 
 const Profile = () => {
     const { userdata } = useSelector((state) => state.user);

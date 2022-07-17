@@ -14,7 +14,8 @@ import "./style.scss";
 
 function LoginForm() {
     const [error, setError] = useState(false);
-    const [login, setLogin] = useState(true);
+    const [login, setLogin] = useState(false);
+    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -31,29 +32,27 @@ function LoginForm() {
             GetLoginViaToken(token)
                 .then(function (response) {
                     // console.log('response from login via token', response)
-                    const data = { token: token, user: response.data };
-                    dispatch(createUser(data));
-                    navigate("/");
-                    setLogin(false);
+                    const loginData = { token: token, user: response.data };
+                    dispatch(createUser(loginData));
+                    navigate("/");                    
                 })
                 .catch(function (error) {
                     console.log(error.response.data);
-                    setLogin(false);
+                    setLogin(true);
                 });
         } else {
-            setLogin(false);
+            setLogin(true);
         }
     }, [dispatch, navigate]);
 
     const onSubmit = (formdata) => {
+        setLoading(true)
         GetLogin(formdata)
             .then(function (response) {
                 // console.log('Token: ', data.token);
                 // console.log('User: ', data.user);
                 if (formdata.rememberMe) {
                     localStorage.setItem("rememberMe", response.data.token);
-                } else {
-                    localStorage.removeItem("rememberMe");
                 }
                 reset();
                 dispatch(createUser(response.data));
@@ -62,15 +61,16 @@ function LoginForm() {
             .catch(function (error) {
                 console.log(error.response.data);
                 setError(true);
+                setLoading(false)
             });
     };
 
     return (
         <Container maxWidth="xs" className="form">
             <Typography className="title" component="h2">
-                {login ? "Loading..." : "Login"}
+                {login ? "Login" : "Loading..."}
             </Typography>
-            {!login && (
+            {login && (
                 <>
                     <Box
                         onSubmit={handleSubmit(onSubmit)}
@@ -125,22 +125,25 @@ function LoginForm() {
                         </InputLabel>
                         <Button
                             disabled={!isValid}
-                            className="submitbutton"
+                            className="submit_button"
                             type="submit"
                         >
                             Login
                         </Button>
-                    </Box>
+                    </Box>                  
                     {error && (
                         <Typography className="error_title">
                             {"Incorrect data!"}
                         </Typography>
                     )}
+                    <Typography className="loading_title">
+                        {loading ? "Loading..." : ""}
+                    </Typography>                   
                     <Typography className="subtitle">
                         {"Don't have account?"}
                     </Typography>
                     <Button
-                        className="regbutton"
+                        className="submit_button"
                         component={Link}
                         to="/registration"
                     >

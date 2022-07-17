@@ -4,33 +4,6 @@ const Base_URL = 'https://api-nodejs-todolist.herokuapp.com/';
 
 axios.defaults.baseURL = Base_URL
 
-export const GetLogin = async(data) => {
-    const config = {
-        method: 'POST',
-        url: 'user/login',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        data: JSON.stringify(data)
-    };
-
-    const result = await axios(config);
-    return result;
-}
-
-export const GetLogout = async(token) => {
-    const config = {
-        method: 'POST',
-        url: 'user/logout',
-        headers: {
-            'Authorization': token
-        }
-    };
-
-    const result = await axios(config);
-    return result;
-}
-
 export const GetRegister = async(data) => {
     const config = {
         method: 'POST',
@@ -45,10 +18,37 @@ export const GetRegister = async(data) => {
     return result;
 }
 
+export const GetLogin = async(data) => {
+    const config = {
+        method: 'POST',
+        url: 'user/login',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify(data)
+    };
+
+    const result = await axios(config);
+    return result;
+}
+
 export const GetLoginViaToken = async(token) => {
     const config = {
         method: 'GET',
         url: 'user/me',
+        headers: {
+            'Authorization': token
+        }
+    };
+
+    const result = await axios(config);
+    return result;
+}
+
+export const GetLogout = async(token) => {
+    const config = {
+        method: 'POST',
+        url: 'user/logout',
         headers: {
             'Authorization': token
         }

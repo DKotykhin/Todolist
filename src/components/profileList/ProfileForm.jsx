@@ -8,10 +8,10 @@ import { Box } from "@mui/system";
 import TextField from "@mui/material/TextField";
 
 import { DeleteUser, UpdateUser } from "api/userrequests";
-import { ProfileFormValidation } from "./FormValidation";
+import { ProfileFormValidation } from "./ProfileFormValidation";
 import AvatarForm from "./AvatarForm";
 
-import './style.scss';
+import './profilelist.scss';
 
 const ProfileForm = () => {
     const { userdata } = useSelector((state) => state.user);

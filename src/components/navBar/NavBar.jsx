@@ -44,6 +44,7 @@ const NavBar = () => {
                 // console.log('Logout response', response)
                 dispatch(removeUser());
                 navigate("/login");
+                localStorage.removeItem("rememberMe");
             })
             .catch(function (error) {
                 console.log(error.response.data);                

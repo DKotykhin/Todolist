@@ -11,8 +11,10 @@ import { GetRegister } from "api/userrequests";
 import "./style.scss";
 
 function RegisterForm() {
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
-    const [error, setError] = useState(false)
 
     const {
         control,
@@ -22,16 +24,18 @@ function RegisterForm() {
     } = useForm(RegisterFormValidation);
 
     const onSubmit = (data) => {
+        setLoading(true)
         // console.log(data)
         GetRegister(data)
             .then(function (response) {
-                navigate("/login");
                 console.log("User", response.data.user.name, "has been added");
                 reset();
+                navigate("/login");
             })
             .catch(function (error) {
                 console.log(error.response.data);
-                setError(true)
+                setError(true);
+                setLoading(false)
             });
     };
 
@@ -99,7 +103,7 @@ function RegisterForm() {
                 />
                 <Button
                     disabled={!isValid}
-                    className="submitbutton"
+                    className="submit_button"
                     type="submit"
                 >
                     {'Register'}
@@ -110,8 +114,11 @@ function RegisterForm() {
                     {"Can't register user"}
             </Typography>
             }
+            <Typography className="loading_title">
+                        {loading ? "Loading..." : ""}
+                    </Typography>
             <Typography className="subtitle">{'Already have account?'}</Typography>
-            <Button className="regbutton" component={Link} to="/login">
+            <Button className="submit_button" component={Link} to="/login">
                 {'Login'}
             </Button>
         </Container>

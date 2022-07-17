@@ -93,7 +93,7 @@ function PasswordForm() {
                 />
                 <Button
                     disabled={!isValid}
-                    className="submitbutton"
+                    className="submit_button"
                     type="submit"
                 >
                     Change password

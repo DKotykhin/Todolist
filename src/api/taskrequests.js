@@ -2,10 +2,12 @@ import axios from 'axios'
 
 const Base_URL = 'https://api-nodejs-todolist.herokuapp.com/';
 
+axios.defaults.baseURL = Base_URL;
+
 export const GetAllTasks = async(token) => {
     const config = {
         method: 'GET',
-        url: `${Base_URL}task`,
+        url: 'task',
         headers: {
             'Authorization': token,
             'Content-Type': 'application/json'
@@ -19,7 +21,7 @@ export const GetAllTasks = async(token) => {
 export const AddTask = async(data, token) => {
     const config = {
         method: 'POST',
-        url: `${Base_URL}task`,
+        url: 'task',
         headers: {
             'Authorization': token,
             'Content-Type': 'application/json'
@@ -34,7 +36,7 @@ export const AddTask = async(data, token) => {
 export const UpdateTask = async(data, token, id) => {
     const config = {
         method: 'PUT',
-        url: `${Base_URL}task/${id}`,
+        url: `task/${id}`,
         headers: {
             'Authorization': token,
             'Content-Type': 'application/json'
@@ -49,7 +51,7 @@ export const UpdateTask = async(data, token, id) => {
 export const DeleteTask = async(token, id) => {
     const config = {
         method: 'DELETE',
-        url: `${Base_URL}task/${id}`,
+        url: `task/${id}`,
         headers: {
             'Authorization': token,
             'Content-Type': 'application/json'

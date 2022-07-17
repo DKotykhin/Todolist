@@ -7,17 +7,17 @@ import { Box } from "@mui/system";
 
 import { UploadAvatar, DeleteAvatar } from "api/userrequests";
 
-import "./style.scss";
 
 const AvatarForm = () => {
+    const [loadedAvatar, setLoadedAvatar] = useState(false);
+    const [deletedAvatar, setDeletedAvatar] = useState(false);
     const { userdata } = useSelector((state) => state.user);
+    
     const {
         register,
         reset,
         handleSubmit,        
     } = useForm();
-    const [loadedAvatar, setLoadedAvatar] = useState(false);
-    const [deletedAvatar, setDeletedAvatar] = useState(false);
     
     useEffect(() => {
         const timer = setTimeout(() => {
