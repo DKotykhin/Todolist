@@ -16,7 +16,7 @@ const style = {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: '80%',
+    width: "80%",
     maxWidth: 500,
     bgcolor: "background.paper",
     border: "2px solid #000",
@@ -36,7 +36,7 @@ const CardList = ({ taskdata }) => {
         setOpen(false);
     };
 
-    const handleDelete = (id) => {        
+    const handleDelete = (id) => {
         setLoading(true);
         DeleteTask(userdata.token, id)
             .then(function (response) {
@@ -63,13 +63,13 @@ const CardList = ({ taskdata }) => {
             });
     };
 
-    const handleUpdate = (data) => {        
+    const handleUpdate = (data) => {
         setOpen(true);
-        setCardData(data)
+        setCardData(data);
     };
 
     return (
-        <Container maxWidth='xl'>           
+        <Container maxWidth="xl">
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -77,7 +77,10 @@ const CardList = ({ taskdata }) => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <UpdateTaskForm props={cardData} handleClose={handleClose} />
+                    <UpdateTaskForm
+                        props={cardData}
+                        handleClose={handleClose}
+                    />
                 </Box>
             </Modal>
             <Box sx={{ textAlign: "center" }}>
@@ -94,14 +97,15 @@ const CardList = ({ taskdata }) => {
                     color="text.secondary"
                     sx={{ fontSize: "18px", mt: 1, textAlign: "center" }}
                 >
-                    {"Total amount: "}
-                    {taskdata.length}
+                    {taskdata.length
+                        ? `Total amount: ${taskdata.length}`
+                        : "No cards"}
                 </Typography>
             )}
             <Grid container>
                 {taskdata.map((task) => (
                     <Grid item xs={12} md={6} xl={4} key={task._id}>
-                        <Box sx={{ m: 2 }}>
+                        <Box sx={{ m:1, display: 'flex', justifyContent: 'center' }}>
                             <BasicCard
                                 props={task}
                                 handleDelete={() => handleDelete(task._id)}
