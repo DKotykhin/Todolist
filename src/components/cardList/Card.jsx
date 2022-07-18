@@ -23,7 +23,6 @@ export default function BasicCard({
     handleComplete,
     handleUpdate,
 }) {
-    
     const title = props.description.split("&#9000;")[0];
     const subtitle = props.description.split("&#9000;")[1];
     const desc = props.description.split("&#9000;")[2];

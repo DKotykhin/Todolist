@@ -5,13 +5,15 @@ import Footer from "components/footer/Footer";
 
 const Layout = () => {
     return(
-        <div className="container">
-            <header>
-                <NavBar/>
-            </header>
-            <main style={{'min-height': 'calc(100vh - 170px)'}}>
-                <Outlet/>
-            </main>
+        <div>
+            <div style={{'minHeight': 'calc(100vh - 64px)'}}>
+                <header>
+                    <NavBar/>
+                </header>
+                <main>
+                    <Outlet/>
+                </main>
+            </div>
             <footer>
                 <Footer />
             </footer>

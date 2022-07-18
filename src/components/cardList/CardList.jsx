@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Box, Container, Typography, Grid, Modal } from "@mui/material";
@@ -10,6 +10,9 @@ import { selectUser } from "store/selectors";
 import BasicCard from "components/cardList/Card";
 import AddTaskModal from "components/taskForms/AddTaskModal";
 import UpdateTaskForm from "components/taskForms/UpdateTaskForm";
+import FieldSort from "components/cardSort/FieldSort";
+import SortAction from "./SortAction";
+import AZSort from "components/cardSort/AZSort";
 
 const style = {
     position: "absolute",
@@ -26,11 +29,18 @@ const style = {
 
 const CardList = ({ taskdata }) => {
     const [loading, setLoading] = useState(false);
-    const [cardData, setCardData] = useState();
+    const [cardData, setCardData] = useState([]);
+    const [newTaskdata, setNewTaskdata] = useState([]);
+    const [sortOrder, setSortOrder] = useState("A-z");
+    const [sortField, setSortField] = useState("created");
     const [open, setOpen] = useState(false);
 
     const { userdata } = useSelector(selectUser);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        setNewTaskdata(SortAction(taskdata, sortField, sortOrder));
+    }, [sortField, sortOrder, taskdata]);
 
     const handleClose = () => {
         setOpen(false);
@@ -40,7 +50,7 @@ const CardList = ({ taskdata }) => {
         setLoading(true);
         DeleteTask(userdata.token, id)
             .then(function (response) {
-                // console.log(response);
+                // console.log('Delete task response: ', response.data);
                 dispatch(removeTask(id));
                 setLoading(false);
             })
@@ -54,7 +64,7 @@ const CardList = ({ taskdata }) => {
         const newData = { completed: !data.completed };
         UpdateTask(newData, userdata.token, data._id)
             .then(function (response) {
-                // console.log(response);
+                // console.log('Update task response: ', response.data);
                 dispatch(updateTaskCompleted(data._id));
                 setLoading(false);
             })
@@ -66,6 +76,13 @@ const CardList = ({ taskdata }) => {
     const handleUpdate = (data) => {
         setOpen(true);
         setCardData(data);
+    };
+
+    const FieldSelect = (data) => {
+        setSortField(data);
+    };
+    const AZSelect = (data) => {
+        setSortOrder(data);
     };
 
     return (
@@ -102,10 +119,22 @@ const CardList = ({ taskdata }) => {
                         : "No cards"}
                 </Typography>
             )}
+            {taskdata.length > 1 && (
+                <>
+                    <FieldSort onSelect={FieldSelect} />
+                    <AZSort onSelect={AZSelect} />
+                </>
+            )}
             <Grid container>
-                {taskdata.map((task) => (
+                {newTaskdata?.map((task) => (
                     <Grid item xs={12} md={6} xl={4} key={task._id}>
-                        <Box sx={{ m:1, display: 'flex', justifyContent: 'center' }}>
+                        <Box
+                            sx={{
+                                m: 1,
+                                display: "flex",
+                                justifyContent: "center",
+                            }}
+                        >
                             <BasicCard
                                 props={task}
                                 handleDelete={() => handleDelete(task._id)}
