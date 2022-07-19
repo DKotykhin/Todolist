@@ -3,45 +3,45 @@ import * as yup from "yup";
 
 const registerschema = yup.object({
     name: yup.string()
-        .matches(/^([^0-9]*)$/, 'Введите буквы!')
-        .min(2, 'Минимум 2 символа для заполнения')
-        .required('Обязательное поле!'),
+        .matches(/^([^0-9]*)$/, 'Enter letters!')
+        .min(2, 'Minimum 2 characters to fill')
+        .required('Required field!'),
     email: yup
         .string()
-        .email('Неправильный email адрес')
-        .required('Обязательное поле!'),
+        .email('Wrong email address')
+        .required('Required field!'),
     password: yup
         .string()
-        .required('Обязательное поле!')
-        .min(8, 'Минимум 8 символов для заполнения')
+        .required('Required field!')
+        .min(8, 'Minimum 8 characters to fill')
 });
 
 const loginschema = yup.object({
     email: yup
         .string()
-        .email('Неправильный email адрес')
-        .required('Обязательное поле!'),
+        .email('Wrong email address')
+        .required('Required field!'),
     password: yup
         .string()
-        .required('Обязательное поле!')
-        .min(8, 'Минимум 8 символов для заполнения')
+        .required('Required field!')
+        .min(8, 'Minimum 8 characters to fill')
 });
 
 const passwordschema = yup.object({
     password: yup
         .string()
-        .required('Обязательное поле!')
-        .min(8, 'Минимум 8 символов для заполнения'),
+        .required('Required field!')
+        .min(8, 'Minimum 8 characters to fill'),
     confirmpassword: yup
         .string()
-        .required('Обязательное поле!')
-        .min(8, 'Минимум 8 символов для заполнения')
+        .required('Required field!')
+        .min(8, 'Minimum 8 characters to fill')
 });
 
 const addtaskschema = yup.object({
     title: yup.string()
-        .min(2, 'Минимум 2 символа для заполнения')
-        .required('Обязательное поле!'),
+        .min(2, 'Minimum 2 characters to fill')
+        .required('Required field!'),
 });
 
 export const RegisterFormValidation = {

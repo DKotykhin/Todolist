@@ -55,7 +55,7 @@ function RegisterForm() {
                     },
                 }}                
                 noValidate
-                autoComplete="off"
+                autoComplete="on"
             >                
                 <Controller
                     name="name"

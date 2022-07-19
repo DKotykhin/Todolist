@@ -9,6 +9,8 @@ import { UploadAvatar, DeleteAvatar } from "api/userrequests";
 import DeleteAvatarModal from "./DeleteAvatarModal";
 import { selectUser } from "store/selectors";
 
+import './profilelist.scss';
+
 const AvatarForm = () => {
     const [loadedAvatar, setLoadedAvatar] = useState(false);
     const [deletedAvatar, setDeletedAvatar] = useState(false);
@@ -56,7 +58,10 @@ const AvatarForm = () => {
     };
 
     return (
-        <Container maxWidth="xs">
+        <Container maxWidth="xs" className="profile_form">
+            <Typography className="title">
+                Change Avatar
+            </Typography>
             <Box
                 onSubmit={handleSubmit(onSubmit)}
                 component="form"

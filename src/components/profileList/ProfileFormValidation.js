@@ -3,15 +3,15 @@ import * as yup from "yup";
 
 const profileschema = yup.object({
     name: yup.string()
-        .matches(/^([^0-9]*)$/, 'Введите буквы!')
-        .min(2, 'Минимум 2 символа для заполнения')
-        .required('Обязательное поле!'),
+        .matches(/^([^0-9]*)$/, 'Enter letters!')
+        .min(2, 'Minimum 2 characters to fill')
+        .required('Required field!'),
     age: yup
         .number()
-        .typeError('Введите цифры!')
-        .integer('Введите целые числа!')
-        .min(12, 'Слишком молод!')
-        .max(99, 'Слишком стар!')
+        .typeError('Enter numbers!')
+        .integer('Enter integer numbers!')
+        .min(12, 'Too young!')
+        .max(99, 'Too old!')
         // .positive('Введите положительные числа!')
 });
 

@@ -82,7 +82,7 @@ function LoginForm() {
                             },
                         }}
                         noValidate
-                        autoComplete="off"
+                        autoComplete="on"
                     >
                         <Controller
                             name="email"
