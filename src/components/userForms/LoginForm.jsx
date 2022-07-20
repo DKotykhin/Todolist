@@ -114,7 +114,7 @@ function LoginForm() {
                                 />
                             )}
                         />
-                        <InputLabel>
+                        <InputLabel className="label">
                             <Controller
                                 name="rememberMe"
                                 control={control}

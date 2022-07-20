@@ -9,10 +9,7 @@ import {
 } from "@mui/material";
 
 const bull = (
-    <Box
-        component="span"
-        sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-    >
+    <Box component="span" sx={{ display: "inline", mx: "3px" }}>
         &bull;
     </Box>
 );
@@ -34,22 +31,26 @@ export default function BasicCard({
     return (
         <Card
             variant="outlined"
-            sx={[
-                props.completed
-                    ? { backgroundColor: "rgb(0, 161, 182, 0.2)" }
-                    : daysLeft < 2
-                    ? { backgroundColor: "rgb(255, 0, 0, 0.15)" }
-                    : null,
-                {
-                    width: 380,
-                    border: "2px solid #979797",
-                    boxShadow: 24,
-                    borderRadius: "20px",
-                },
-            ]}
+            sx={{
+                width: 380,
+                border: "2px solid #979797",
+                boxShadow: 24,
+                borderRadius: "20px",
+            }}
         >
             <CardContent>
-                <Typography variant="h5" gutterBottom>
+                <Typography
+                    variant="h5"
+                    gutterBottom
+                    sx={[
+                        props.completed
+                            ? { backgroundColor: "rgb(0, 161, 182, 0.5)" }
+                            : daysLeft < 2
+                            ? { backgroundColor: "rgb(255, 0, 0, 0.5)" }
+                            : null,
+                        { borderRadius: "15px", wordWrap: "break-word" },
+                    ]}
+                >
                     {bull}
                     {title}
                     {bull}
@@ -57,24 +58,27 @@ export default function BasicCard({
                 <Typography
                     variant="subtitle1"
                     color="text.secondary"
-                    sx={{ minHeight: "28px" }}
+                    sx={{ minHeight: "28px", wordWrap: "break-word" }}
                     // gutterBottom
                 >
                     {subtitle}
                 </Typography>
                 <Divider sx={{ mb: 1 }} />
-                <Typography variant="body2" sx={{ minHeight: "60px" }}>
+                <Typography
+                    variant="body2"
+                    sx={{ minHeight: "60px", wordWrap: "break-word" }}
+                >
                     {desc}
                 </Typography>
                 <Divider sx={{ mb: 1 }} />
                 <Typography variant="body2" color="text.secondary">
                     {"Created: "}
                     {new Date(`${props.createdAt}`).toDateString()}
-                </Typography>                
+                </Typography>
                 {date && (
                     <Typography variant="body2" color="text.secondary">
                         {"Deadline: "}
-                        {new Date(date).toDateString()}{' '}&rarr;
+                        {new Date(date).toDateString()} &rarr;
                         {` Left: ${daysLeft} days`}
                     </Typography>
                 )}

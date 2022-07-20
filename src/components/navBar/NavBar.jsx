@@ -30,10 +30,10 @@ const NavBar = () => {
     const dispatch = useDispatch();
 
     const username = userdata.token ? userdata.user.name : "";
-  
+
     const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
-    };
+    setAnchorElUser(event.currentTarget);
+  };
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
@@ -48,9 +48,9 @@ const NavBar = () => {
                 localStorage.removeItem("rememberMe");
             })
             .catch(function (error) {
-                console.log(error.response.data);                
+                console.log(error.response.data);
             });
-    }
+    };
 
     const handleSettingMenu = (e) => {
         switch (e) {
@@ -61,7 +61,7 @@ const NavBar = () => {
                 navigate("/password");
                 break;
             case "Logout":
-                Logout()
+                Logout();
                 break;
             default:
                 navigate("/login");
@@ -102,13 +102,13 @@ const NavBar = () => {
                     </Typography>
                     <Typography sx={{ mr: 3 }}>{username}</Typography>
                     {username && (
-                        <Box sx={{ flexGrow: 0 }}>
+                        <Box>
                             <Tooltip title="Open settings">
                                 <IconButton
                                     onClick={handleOpenUserMenu}
                                     sx={{ p: 0 }}
-                                >                                   
-                                    <Avatar
+                                >
+                                    <Avatar                                        
                                         alt={username || "TodoList"}
                                         src={`https://api-nodejs-todolist.herokuapp.com/user/${userdata.user._id}/avatar`}
                                     />
@@ -130,21 +130,22 @@ const NavBar = () => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                {settings.map((setting) => (
-                                    <MenuItem
-                                        key={setting}
-                                        onClick={handleCloseUserMenu}
-                                    >
+                                <MenuItem
+                                    sx={{ display: "block" }}
+                                    onClick={handleCloseUserMenu}
+                                >
+                                    {settings.map((setting) => (
                                         <Typography
-                                            textAlign="center"
+                                            key={setting}
+                                            sx={{ padding: "4px" }}
                                             onClick={() =>
                                                 handleSettingMenu(setting)
                                             }
                                         >
                                             {setting}
                                         </Typography>
-                                    </MenuItem>
-                                ))}
+                                    ))}
+                                </MenuItem>
                             </Menu>
                         </Box>
                     )}

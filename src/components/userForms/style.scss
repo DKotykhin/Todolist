@@ -29,4 +29,10 @@
         margin-bottom: 30px;
         color: red;
     }
+    input[type="checkbox"] {
+        display: inline;
+        width: 25px;
+        height: 25px;
+        margin-right: 15px;
+    }
 }
