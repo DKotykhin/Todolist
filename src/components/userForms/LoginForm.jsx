@@ -48,8 +48,8 @@ function LoginForm() {
         setLogin(false)
         GetLogin(formdata)
             .then(function (response) {
-                // console.log('Token: ', data.token);
-                // console.log('User: ', data.user);
+                // console.log('Token: ', response.data.token);
+                // console.log('User: ', response.data.user);
                 if (formdata.rememberMe) {
                     localStorage.setItem("rememberMe", response.data.token);
                 }

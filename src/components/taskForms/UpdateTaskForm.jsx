@@ -35,14 +35,16 @@ function UpdateTaskForm({ props, handleClose }) {
     const title = props.description.split("&#9000;")[0];
     const subtitle = props.description.split("&#9000;")[1];
     const desc = props.description.split("&#9000;")[2];
+    const date = props.description.split("&#9000;")[3];
 
     useEffect(() => {
         reset({
             title,
             subtitle,
             desc,
+            date,
         });
-    }, [desc, reset, subtitle, title]);
+    }, [desc, reset, subtitle, title, date]);
 
     const onSubmit = (data) => {
         const newData = {
@@ -50,7 +52,9 @@ function UpdateTaskForm({ props, handleClose }) {
                 "&#9000;",
                 data.subtitle ? data.subtitle : "",
                 "&#9000;",
-                data.desc ? data.desc : ""
+                data.desc ? data.desc : "",
+                "&#9000;",
+                data.date ? data.date : ""
             ),
             completed: data.completed || false,
         };
@@ -126,7 +130,25 @@ function UpdateTaskForm({ props, handleClose }) {
                         />
                     )}
                 />
-                <InputLabel>
+                <InputLabel className="date_label">
+                    Deadline
+                    <Controller
+                        name="date"
+                        control={control}
+                        render={({ field }) => (
+                            <TextField                             
+                                {...field}
+                                type="date"
+                                // label={date ? "deadline" : ""}
+                                inputProps={{
+                                    min: new Date().toISOString().slice(0, 10),
+                                }}
+                                variant="outlined"
+                            />
+                        )}
+                    />
+                </InputLabel>
+                <InputLabel sx={{ mt: 2, textAlign: 'center' }}>
                     <Controller
                         name="completed"
                         control={control}

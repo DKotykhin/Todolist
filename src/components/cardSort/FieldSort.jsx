@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Stack, Chip } from "@mui/material";
 
-const sortItems = ["created", "updated", "name"];
+const sortItems = ["created", "deadline", "title"];
 
 const FieldSort = ({ onSelect }) => {
     const [chipLabel, setChipLabel] = useState("created");

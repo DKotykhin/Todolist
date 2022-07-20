@@ -3,19 +3,19 @@ const SortAction = (taskdata, data, sort) => {
     const createdA = [...taskdata].sort((a, b) =>
         a.createdAt < b.createdAt ? 1 : -1
     );
-    const updatedA = [...taskdata].sort((a, b) =>
-        a.updatedAt < b.updatedAt ? 1 : -1
+    const deadlineA = [...taskdata].sort((a, b) =>
+        a.description.split("&#9000;")[3] < b.description.split("&#9000;")[3] ? 1 : -1
     );
-    const namedA = [...taskdata].sort((a, b) =>
+    const titleA = [...taskdata].sort((a, b) =>
         a.description > b.description ? 1 : -1
     );
     const createdZ = [...taskdata].sort((a, b) =>
         a.createdAt > b.createdAt ? 1 : -1
     );
-    const updatedZ = [...taskdata].sort((a, b) =>
-        a.updatedAt > b.updatedAt ? 1 : -1
+    const deadlineZ = [...taskdata].sort((a, b) =>
+        a.description.split("&#9000;")[3] > b.description.split("&#9000;")[3] ? 1 : -1
     );
-    const namedZ = [...taskdata].sort((a, b) =>
+    const titleZ = [...taskdata].sort((a, b) =>
         a.description < b.description ? 1 : -1
     );
 
@@ -24,11 +24,11 @@ const SortAction = (taskdata, data, sort) => {
             case "created":
                 newData = createdZ;
                 break;
-            case "updated":
-                newData = updatedZ;
+            case "deadline":
+                newData = deadlineZ;
                 break;
-            case "name":
-                newData = namedZ;
+            case "title":
+                newData = titleZ;
                 break;
             default:
                 newData = createdZ;
@@ -38,11 +38,11 @@ const SortAction = (taskdata, data, sort) => {
             case "created":
                 newData = createdA;
                 break;
-            case "updated":
-                newData = updatedA;
+            case "deadline":
+                newData = deadlineA;
                 break;
-            case "name":
-                newData = namedA;
+            case "title":
+                newData = titleA;
                 break;
             default:
                 newData = createdA;

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
 
-import { Button, TextField, Container, Typography } from "@mui/material";
+import { Button, TextField, Container, InputLabel, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -34,12 +34,15 @@ function AddTaskForm({ handleClose }) {
     }, [loaded]);
 
     const onSubmit = (data) => {
+        // console.log(data)
         const newData = {
             description: data.title.concat(
                 "&#9000;",
                 data.subtitle ? data.subtitle : "",
                 "&#9000;",
-                data.desc ? data.desc : ""
+                data.desc ? data.desc : "",
+                "&#9000;",
+                data.date ? data.date : ""
             ),
         };
         setLoading(true);
@@ -118,6 +121,21 @@ function AddTaskForm({ handleClose }) {
                         />
                     )}
                 />
+                <InputLabel sx={{ m: 2, display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
+                    Deadline
+                    <Controller
+                        name="date"
+                        control={control}
+                        render={({ field }) => (
+                            <TextField                        
+                                {...field}
+                                type='date'                            
+                                inputProps={{ min: new Date().toISOString().slice(0,10) }}                            
+                                variant="outlined"                            
+                            />
+                        )}
+                    />
+                </InputLabel>
                 <Typography className="loading">
                     {loading ? "Loading..." : ""}
                     {loaded ? "Task add successfully!" : ""}

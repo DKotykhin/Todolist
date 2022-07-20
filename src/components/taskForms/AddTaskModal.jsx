@@ -12,6 +12,7 @@ const style = {
     maxWidth: 500,
     bgcolor: "background.paper",
     border: "2px solid #000",
+    borderRadius: '20px',
     boxShadow: 24,
     p: 2,
 };
@@ -32,8 +33,8 @@ export default function AddTaskModal() {
             <Modal
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+                // aria-labelledby="modal-modal-title"
+                // aria-describedby="modal-modal-description"                
             >
                 <Box sx={style}>
                     <AddTaskForm handleClose={handleClose} />
