@@ -54,8 +54,8 @@ function RegisterForm() {
                         m: "50px auto",
                     },
                 }}                
-                noValidate
-                autoComplete="on"
+                // noValidate
+                // autoComplete="off"
             >                
                 <Controller
                     name="name"
@@ -64,9 +64,11 @@ function RegisterForm() {
                         <TextField                           
                             error={errors.name ? true : false}
                             label="name"
+                            type="text"
                             variant="standard"                           
                             placeholder="your name"
                             helperText={errors.name?.message}
+                            autoComplete='name'
                             {...field}
                         />
                     )}
@@ -82,6 +84,7 @@ function RegisterForm() {
                             type="email"
                             placeholder="your email"
                             helperText={errors.email?.message}
+                            autoComplete='email'
                             {...field}
                         />
                     )}

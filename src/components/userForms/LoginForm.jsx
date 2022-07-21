@@ -81,8 +81,8 @@ function LoginForm() {
                                 m: "50px auto",
                             },
                         }}
-                        noValidate
-                        autoComplete="on"
+                        // noValidate
+                        // autoComplete="off"
                     >
                         <Controller
                             name="email"
@@ -96,6 +96,7 @@ function LoginForm() {
                                     placeholder="email"
                                     helperText={errors.email?.message}
                                     {...field}
+                                    autoComplete='email'
                                 />
                             )}
                         />

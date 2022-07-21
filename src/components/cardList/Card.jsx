@@ -75,12 +75,12 @@ export default function BasicCard({
                 <Divider sx={{ mb: 1 }} />
                 <Typography variant="body2" color="text.secondary">
                     {"Created: "}
-                    {new Date(`${props.createdAt}`).toDateString()}
+                    {new Date(`${props.createdAt}`).toLocaleString()}
                 </Typography>
                 {date && (
                     <Typography variant="body2" color="text.secondary">
                         {"Deadline: "}
-                        {new Date(date).toDateString()} &rarr;
+                        {new Date(date).toLocaleDateString()} &rarr;
                         {` Left: ${daysLeft} days`}
                     </Typography>
                 )}
