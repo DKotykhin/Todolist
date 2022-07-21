@@ -15,10 +15,26 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import { UpdateTask } from "api/taskrequests";
 import { updateTaskAll } from "store/taskSlice";
-import { AddTaskFormValidation } from "components/userForms/FormValidation";
 import { selectUser } from "store/selectors";
+import { AddTaskFormValidation } from "components/userForms/FormValidation";
+import FormField from "./FormField";
 
 import "./style.scss";
+
+const transformData = (data) => {
+    const newData = {
+        description: data.title.concat(
+            "&#9000;",
+            data.subtitle ? data.subtitle : "",
+            "&#9000;",
+            data.desc ? data.desc : "",
+            "&#9000;",
+            data.date ? data.date : ""
+        ),
+        completed: data.completed || false,
+    };
+    return newData
+}
 
 function UpdateTaskForm({ props, handleClose }) {
     const { userdata } = useSelector(selectUser);
@@ -47,21 +63,11 @@ function UpdateTaskForm({ props, handleClose }) {
     }, [desc, reset, subtitle, title, date]);
 
     const onSubmit = (data) => {
-        const newData = {
-            description: data.title.concat(
-                "&#9000;",
-                data.subtitle ? data.subtitle : "",
-                "&#9000;",
-                data.desc ? data.desc : "",
-                "&#9000;",
-                data.date ? data.date : ""
-            ),
-            completed: data.completed || false,
-        };
+        const newData = transformData(data)
         setLoading(true);
         UpdateTask(newData, userdata.token, props._id)
             .then(function (response) {
-                // console.log(response);
+                // console.log('Update Task', response.data);
                 handleClose();
                 dispatch(updateTaskAll(response.data.data));
                 setLoading(false);
@@ -81,65 +87,23 @@ function UpdateTaskForm({ props, handleClose }) {
                 noValidate
                 autoComplete="off"
             >
-                <Controller
-                    name="title"
+                <FormField
+                    name={"title"}
                     control={control}
-                    render={({ field }) => (
-                        <TextField
-                            className="field"
-                            {...field}
-                            error={errors.title ? true : false}
-                            helperText={errors.title?.message}
-                            multiline
-                            maxRows={2}
-                            label="title"
-                            variant="outlined"
-                            type="text"
-                            // placeholder="...add title"
-                        />
-                    )}
+                    error={errors.title}
+                    maxRows={2}
                 />
-                <Controller
-                    name="subtitle"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                            className="field"
-                            {...field}
-                            multiline
-                            maxRows={2}
-                            label="subtitle"
-                            variant="outlined"
-                            type="text"
-                            // placeholder="...add subtitle"
-                        />
-                    )}
-                />
-                <Controller
-                    name="desc"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                            className="field"
-                            {...field}
-                            multiline
-                            maxRows={4}
-                            label="description"
-                            variant="outlined"
-                            // placeholder="...add description"
-                        />
-                    )}
-                />
+                <FormField name={"subtitle"} control={control} maxRows={2} />
+                <FormField name={"description"} control={control} maxRows={4} />
                 <InputLabel className="date_label">
                     Deadline
                     <Controller
                         name="date"
                         control={control}
                         render={({ field }) => (
-                            <TextField                             
+                            <TextField
                                 {...field}
                                 type="date"
-                                // label={date ? "deadline" : ""}
                                 inputProps={{
                                     min: new Date().toISOString().slice(0, 10),
                                 }}
@@ -148,7 +112,7 @@ function UpdateTaskForm({ props, handleClose }) {
                         )}
                     />
                 </InputLabel>
-                <InputLabel sx={{ mt: 2, textAlign: 'center' }}>
+                <InputLabel sx={{ mt: 2, textAlign: "center" }}>
                     <Controller
                         name="completed"
                         control={control}

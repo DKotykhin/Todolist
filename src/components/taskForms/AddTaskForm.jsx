@@ -2,14 +2,21 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
 
-import { Button, TextField, Container, InputLabel, Typography } from "@mui/material";
+import {
+    Button,
+    TextField,
+    Container,
+    InputLabel,
+    Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
 
 import { AddTask } from "api/taskrequests";
 import { addTask } from "store/taskSlice";
-import { AddTaskFormValidation } from "components/userForms/FormValidation";
 import { selectUser } from "store/selectors";
+import { AddTaskFormValidation } from "components/userForms/FormValidation";
+import FormField from "./FormField";
 
 import "./style.scss";
 
@@ -40,7 +47,7 @@ function AddTaskForm({ handleClose }) {
                 "&#9000;",
                 data.subtitle ? data.subtitle : "",
                 "&#9000;",
-                data.desc ? data.desc : "",
+                data.description ? data.description : "",
                 "&#9000;",
                 data.date ? data.date : ""
             ),
@@ -50,9 +57,9 @@ function AddTaskForm({ handleClose }) {
             .then(function (response) {
                 dispatch(addTask(response.data.data));
                 reset({
-                    title: '',
-                    subtitle: '',
-                    desc: ''
+                    title: "",
+                    subtitle: "",
+                    description: "",
                 });
                 setLoading(false);
                 setLoaded(true);
@@ -71,67 +78,46 @@ function AddTaskForm({ handleClose }) {
                 component="form"
                 noValidate
                 autoComplete="off"
-            >
-                <Controller
-                    name="title"
+            >                
+                <FormField
+                    name={"title"}
                     control={control}
-                    render={({ field }) => (
-                        <TextField
-                            className="field"
-                            {...field}
-                            error={errors.title ? true : false}
-                            helperText={errors.title?.message}
-                            multiline
-                            maxRows={2}
-                            label="title"
-                            variant="outlined"
-                            type="text"
-                            placeholder="...add title"
-                        />
-                    )}
+                    error={errors.title}
+                    maxRows={2}
+                    placeholder={"...add title"}
+                />                
+                <FormField
+                    name={"subtitle"}
+                    control={control}                    
+                    maxRows={2}
+                    placeholder={"...add subtitle"}
+                />                
+                <FormField
+                    name={"description"}
+                    control={control}                    
+                    maxRows={4}
+                    placeholder={"...add description"}
                 />
-                <Controller
-                    name="subtitle"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                            className="field"
-                            {...field}
-                            multiline
-                            maxRows={2}
-                            label="subtitle"
-                            variant="outlined"
-                            type="text"
-                            placeholder="...add subtitle"
-                        />
-                    )}
-                />
-                <Controller
-                    name="desc"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                            className="field"
-                            {...field}
-                            multiline
-                            maxRows={4}
-                            label="description"
-                            variant="outlined"
-                            placeholder="...add description"
-                        />
-                    )}
-                />
-                <InputLabel sx={{ m: 2, display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
+                <InputLabel
+                    sx={{
+                        m: 2,
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                        alignItems: "center",
+                    }}
+                >
                     Deadline
                     <Controller
                         name="date"
                         control={control}
                         render={({ field }) => (
-                            <TextField                        
+                            <TextField
                                 {...field}
-                                type='date'                            
-                                inputProps={{ min: new Date().toISOString().slice(0,10) }}                            
-                                variant="outlined"                            
+                                type="date"
+                                inputProps={{
+                                    min: new Date().toISOString().slice(0, 10),
+                                }}
+                                variant="outlined"
                             />
                         )}
                     />

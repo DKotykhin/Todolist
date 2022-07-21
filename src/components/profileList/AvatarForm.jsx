@@ -2,26 +2,24 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
-import { Button, Container, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import CloseIcon from "@mui/icons-material/Close";
 
 import { UploadAvatar, DeleteAvatar } from "api/userrequests";
-import DeleteAvatarModal from "./DeleteAvatarModal";
 import { selectUser } from "store/selectors";
+import DeleteAvatarModal from "./DeleteAvatarModal";
 
-import './profilelist.scss';
+import "./profilelist.scss";
 
 const AvatarForm = () => {
     const [loadedAvatar, setLoadedAvatar] = useState(false);
     const [deletedAvatar, setDeletedAvatar] = useState(false);
     const { userdata } = useSelector(selectUser);
-    
-    const {
-        register,
-        reset,
-        handleSubmit,        
-    } = useForm();
-    
+    const [fileName, setFileName] = useState();
+
+    const { register, reset, handleSubmit } = useForm();
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoadedAvatar(false);
@@ -30,14 +28,15 @@ const AvatarForm = () => {
         return () => clearTimeout(timer);
     }, [loadedAvatar, deletedAvatar]);
 
-    const onSubmit = (data) => {        
+    const onSubmit = (data) => {
         var formData = new FormData();
         formData.append("avatar", data.avatar[0], data.avatar[0].name);
         UploadAvatar(formData, userdata.token)
             .then(function (response) {
                 console.log(response.data);
                 setLoadedAvatar(true);
-                reset();                               
+                reset();
+                setFileName("");
             })
             .catch(function (error) {
                 console.log(error.message);
@@ -57,11 +56,18 @@ const AvatarForm = () => {
             });
     };
 
+    const onChange = (e) => {
+        setFileName(e.target.files[0].name);
+    };
+
+    const onReset = () => {
+        reset();
+        setFileName("");
+    };
+
     return (
-        <Container maxWidth="xs" className="profile_form">
-            <Typography className="title">
-                Change Avatar
-            </Typography>
+        <Box className="avatar_form">
+            <Typography className="title">Change Avatar</Typography>
             <Box
                 onSubmit={handleSubmit(onSubmit)}
                 component="form"
@@ -75,28 +81,47 @@ const AvatarForm = () => {
                 noValidate
                 autoComplete="off"
             >
-                <Typography
-                    sx={{ cursor: "pointer" }}
-                    component="input"
-                    {...register("avatar")}
-                    color="primary"
-                    type="file"
-                />
-                <Button
-                    type="submit"
-                    variant="outlined"                                    
-                >
+                <Box sx={{ textAlign: "center" }}>
+                    <Typography
+                        component="label"
+                        sx={{ cursor: "pointer" }}
+                        onChange={onChange}
+                    >
+                        {fileName ? fileName : "load file..."}
+                        <Typography
+                            sx={{ cursor: "pointer" }}
+                            component="input"
+                            {...register("avatar")}
+                            color="primary"
+                            type="file"
+                            hidden
+                        />
+                    </Typography>
+                    {fileName &&
+                        <CloseIcon
+                            sx={{ margin: "-6px 0 -6px 10px", cursor: "pointer" }}
+                            onClick={onReset}
+                        />
+                    }
+                </Box>
+                <Button type="submit" variant="outlined">
                     Upload
                 </Button>
-            </Box>            
-            <Typography color="primary" sx={{ textAlign: "center", minHeight: '25px' }}>
-                {loadedAvatar ? "Avatar loaded succesfully" : ''}
-            </Typography>          
-            <DeleteAvatarModal handleDelete={handleDelete}/>           
-            <Typography color="error" sx={{ textAlign: "center", minHeight: '25px' }}>
-                {deletedAvatar ? "Avatar deleted succesfully" : ''}
-            </Typography>            
-        </Container>
+            </Box>
+            <Typography
+                color="primary"
+                sx={{ textAlign: "center", minHeight: "25px" }}
+            >
+                {loadedAvatar ? "Avatar loaded succesfully" : ""}
+            </Typography>
+            <DeleteAvatarModal handleDelete={handleDelete} />
+            <Typography
+                color="error"
+                sx={{ textAlign: "center", minHeight: "25px" }}
+            >
+                {deletedAvatar ? "Avatar deleted succesfully" : ""}
+            </Typography>
+        </Box>
     );
 };
 

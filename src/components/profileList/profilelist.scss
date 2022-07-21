@@ -21,7 +21,7 @@
         margin-bottom: 40px;
     }
     label {
-        color: grey;
+        color: #808080;
         text-align: left;
         margin-left: 40px;
         margin-top: 20px;
@@ -71,5 +71,17 @@
         &:hover {
             color: #000;
         }
+    }
+}
+
+.avatar_form {
+    .title {
+        font-size: 22px;
+        margin-top: 50px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    label {
+        margin-left: 0;
     }
 }

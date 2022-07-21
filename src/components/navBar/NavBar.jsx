@@ -10,7 +10,6 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
@@ -32,8 +31,8 @@ const NavBar = () => {
     const username = userdata.token ? userdata.user.name : "";
 
     const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+        setAnchorElUser(event.currentTarget);
+    };
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
@@ -72,31 +71,11 @@ const NavBar = () => {
         <AppBar position="static">
             <Container maxWidth="xl" className="navbar">
                 <Toolbar disableGutters>
-                    <AssignmentTurnedInIcon
-                        sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-                    />
+                    <AssignmentTurnedInIcon sx={{ mr: 1 }} />
                     <Typography
                         component={RouterLink}
                         to="/"
                         className="link_text"
-                        sx={{
-                            display: { xs: "none", md: "flex" },
-                            flexGrow: 1,
-                        }}
-                    >
-                        TodoList
-                    </Typography>
-                    <AssignmentTurnedInIcon
-                        sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-                    />
-                    <Typography
-                        component={RouterLink}
-                        to="/"
-                        className="link_text"
-                        sx={{
-                            display: { xs: "flex", md: "none" },
-                            flexGrow: 1,
-                        }}
                     >
                         TodoList
                     </Typography>
@@ -108,7 +87,7 @@ const NavBar = () => {
                                     onClick={handleOpenUserMenu}
                                     sx={{ p: 0 }}
                                 >
-                                    <Avatar                                        
+                                    <Avatar
                                         alt={username || "TodoList"}
                                         src={`https://api-nodejs-todolist.herokuapp.com/user/${userdata.user._id}/avatar`}
                                     />
@@ -130,14 +109,19 @@ const NavBar = () => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                <MenuItem
+                                <Box
                                     sx={{ display: "block" }}
                                     onClick={handleCloseUserMenu}
                                 >
                                     {settings.map((setting) => (
                                         <Typography
                                             key={setting}
-                                            sx={{ padding: "4px" }}
+                                            sx={{
+                                                padding: "5px 15px",
+                                                cursor: "pointer",
+                                                color: '#808080',
+                                                ":hover": {color: '#2b2b2b'}
+                                            }}
                                             onClick={() =>
                                                 handleSettingMenu(setting)
                                             }
@@ -145,7 +129,7 @@ const NavBar = () => {
                                             {setting}
                                         </Typography>
                                     ))}
-                                </MenuItem>
+                                </Box>
                             </Menu>
                         </Box>
                     )}

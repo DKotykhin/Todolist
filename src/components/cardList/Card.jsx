@@ -45,7 +45,9 @@ export default function BasicCard({
                     sx={[
                         props.completed
                             ? { backgroundColor: "rgb(0, 161, 182, 0.5)" }
-                            : daysLeft < 2
+                            : daysLeft < 2 && daysLeft >=0
+                            ? { backgroundColor: "rgb(255, 165, 0, 0.5)" }
+                            : daysLeft < 0
                             ? { backgroundColor: "rgb(255, 0, 0, 0.5)" }
                             : null,
                         { borderRadius: "15px", wordWrap: "break-word" },
