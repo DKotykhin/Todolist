@@ -8,7 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import { UploadAvatar, DeleteAvatar } from "api/userrequests";
 import { selectUser } from "store/selectors";
-import DeleteAvatarModal from "./DeleteAvatarModal";
+import DeleteDialog from "./DeleteDialog";
 
 import "./profilelist.scss";
 
@@ -28,19 +28,23 @@ const AvatarForm = () => {
         return () => clearTimeout(timer);
     }, [loadedAvatar, deletedAvatar]);
 
-    const onSubmit = (data) => {
-        var formData = new FormData();
-        formData.append("avatar", data.avatar[0], data.avatar[0].name);
-        UploadAvatar(formData, userdata.token)
-            .then(function (response) {
-                console.log(response.data);
-                setLoadedAvatar(true);
-                reset();
-                setFileName("");
-            })
-            .catch(function (error) {
-                console.log(error.message);
-            });
+    const onSubmit = (data) => {        
+        if (data.avatar.length) {
+            const formData = new FormData();
+            formData.append("avatar", data.avatar[0], data.avatar[0].name);
+            UploadAvatar(formData, userdata.token)
+                .then(function (response) {
+                    console.log(response.data);
+                    setLoadedAvatar(true);
+                    reset();
+                    setFileName("");
+                })
+                .catch(function (error) {
+                    console.log(error.message);
+                });
+        } else {
+            console.log('Avatar: No Data')
+        }
     };
 
     const handleDelete = () => {
@@ -97,30 +101,31 @@ const AvatarForm = () => {
                             hidden
                         />
                     </Typography>
-                    {fileName &&
+                    {fileName && (
                         <CloseIcon
-                            sx={{ margin: "-6px 0 -6px 10px", cursor: "pointer" }}
+                            sx={{
+                                margin: "-6px 0 -6px 10px",
+                                cursor: "pointer",
+                            }}
                             onClick={onReset}
                         />
-                    }
+                    )}
                 </Box>
                 <Button type="submit" variant="outlined">
                     Upload
                 </Button>
             </Box>
-            <Typography
-                color="primary"
-                sx={{ textAlign: "center", minHeight: "25px" }}
-            >
+            <Typography color="primary" sx={{ textAlign: 'center', minHeight: '25px'}}>
                 {loadedAvatar ? "Avatar loaded succesfully" : ""}
             </Typography>
-            <DeleteAvatarModal handleDelete={handleDelete} />
-            <Typography
-                color="error"
-                sx={{ textAlign: "center", minHeight: "25px" }}
-            >
+            <Typography color="error" sx={{ textAlign: 'center'}}>
                 {deletedAvatar ? "Avatar deleted succesfully" : ""}
             </Typography>
+            <DeleteDialog
+                button={"delete avatar"}
+                title={"You really want to delete avatar?"}
+                deleteButton={handleDelete}
+            />
         </Box>
     );
 };

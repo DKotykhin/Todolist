@@ -10,10 +10,11 @@ import TextField from "@mui/material/TextField";
 import { DeleteUser, UpdateUser } from "api/userrequests";
 import { ProfileFormValidation } from "./ProfileFormValidation";
 import AvatarForm from "./AvatarForm";
-import DeleteUserModal from "./DeleteUserModal";
+import DeleteDialog from "./DeleteDialog";
+
 import { selectUser } from "store/selectors";
 
-import './profilelist.scss';
+import "./profilelist.scss";
 
 const ProfileForm = () => {
     const [loading, setLoading] = useState(false);
@@ -21,7 +22,7 @@ const ProfileForm = () => {
     const { userdata } = useSelector(selectUser);
     const navigate = useNavigate();
 
-    const {       
+    const {
         control,
         reset,
         handleSubmit,
@@ -39,7 +40,7 @@ const ProfileForm = () => {
         reset({
             name: userdata.user.name,
             age: userdata.user.age,
-            email: userdata.user.email
+            email: userdata.user.email,
         });
     }, [reset, userdata.user.age, userdata.user.email, userdata.user.name]);
 
@@ -55,89 +56,104 @@ const ProfileForm = () => {
     };
 
     const onSubmit = (data) => {
-        setLoading(true)       
+        setLoading(true);
         UpdateUser(data, userdata.token)
-            .then(function (response) {                
-                console.log("New data: ", response.data);
-                setLoaded(true)               
+            .then(function (response) {
+                // console.log("New data: ", response.data);
+                setLoaded(true);
             })
             .catch(function (error) {
                 console.log(error.message);
-            }).finally(() => {
-                setLoading(false);
             })
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     return (
-        <Container maxWidth='xs' className="profile_form">                     
+        <Container maxWidth="xs" className="profile_form">
             <Typography className="title" component="h2">
                 User Profile
             </Typography>
-            <Box className="profile_box"
+            <Box
+                className="profile_box"
                 onSubmit={handleSubmit(onSubmit)}
-                component="form"          
+                component="form"
                 noValidate
                 autoComplete="off"
             >
                 <Box>
-                    <InputLabel>Email</InputLabel>                    
+                    <InputLabel>Email</InputLabel>
                     <Controller
-                    name="email"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField className="field"
-                            {...field}
-                            multiline
-                            maxRows={2}
-                            disabled                      
-                            variant="standard"                                                     
-                        />
-                    )}
-                />
+                        name="email"
+                        control={control}
+                        render={({ field }) => (
+                            <TextField
+                                className="field"
+                                {...field}
+                                multiline
+                                maxRows={2}
+                                disabled
+                                variant="standard"
+                            />
+                        )}
+                    />
                 </Box>
                 <Box>
-                    <InputLabel>Change your name</InputLabel>                    
+                    <InputLabel>Change your name</InputLabel>
                     <Controller
-                    name="name"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField className="field"
-                            {...field}                            
-                            error={errors.name ? true : false}                            
-                            variant="standard"                           
-                            placeholder="your name"
-                            helperText={errors.name?.message}
-                        />
-                    )}
-                />
+                        name="name"
+                        control={control}
+                        render={({ field }) => (
+                            <TextField
+                                className="field"
+                                {...field}
+                                error={errors.name ? true : false}
+                                variant="standard"
+                                placeholder="your name"
+                                helperText={errors.name?.message}
+                            />
+                        )}
+                    />
                 </Box>
                 <Box>
-                    <InputLabel>Change your age</InputLabel>                    
+                    <InputLabel>Change your age</InputLabel>
                     <Controller
-                    name="age"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField className="field"
-                            {...field}
-                            error={errors.age ? true : false}                            
-                            variant="standard"                           
-                            placeholder="your age"
-                            helperText={errors.age?.message}
-                        />
-                    )}
-                />
+                        name="age"
+                        control={control}
+                        render={({ field }) => (
+                            <TextField
+                                className="field"
+                                {...field}
+                                error={errors.age ? true : false}
+                                variant="standard"
+                                placeholder="your age"
+                                helperText={errors.age?.message}
+                            />
+                        )}
+                    />
                 </Box>
                 <Typography className="message">
                     {loading ? "Loading..." : ""}
                     {loaded ? "Profile update successfully!" : ""}
                 </Typography>
-                <Button type="submit" variant="outlined" className="save_button">Save changes</Button>
+                <Button
+                    type="submit"
+                    variant="outlined"
+                    className="save_button"
+                >
+                    Save changes
+                </Button>
             </Box>
-            <AvatarForm />                
+            <AvatarForm />
             <Typography className="subtitle">
                 Need to delete Profile?
-            </Typography>         
-            <DeleteUserModal handleDelete={() => handleDelete(userdata.token)}/>
+            </Typography>
+            <DeleteDialog
+                button={"delete user"}
+                title={"You really want to delete user?"}
+                deleteButton={() => handleDelete(userdata.token)}
+            />
         </Container>
     );
 };
