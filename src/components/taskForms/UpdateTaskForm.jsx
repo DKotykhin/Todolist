@@ -17,7 +17,7 @@ import { UpdateTask } from "api/taskrequests";
 import { updateTaskAll } from "store/taskSlice";
 import { selectUser } from "store/selectors";
 import { AddTaskFormValidation } from "components/userForms/FormValidation";
-import FormField from "./FormField";
+import TaskField from "../fields/TaskField";
 
 import "./style.scss";
 
@@ -87,14 +87,14 @@ function UpdateTaskForm({ props, handleClose }) {
                 noValidate
                 autoComplete="off"
             >
-                <FormField
+                <TaskField
                     name={"title"}
                     control={control}
                     error={errors.title}
                     maxRows={2}
                 />
-                <FormField name={"subtitle"} control={control} maxRows={2} />
-                <FormField name={"description"} control={control} maxRows={4} />
+                <TaskField name={"subtitle"} control={control} maxRows={2} />
+                <TaskField name={"description"} control={control} maxRows={4} />
                 <InputLabel className="date_label">
                     Deadline
                     <Controller

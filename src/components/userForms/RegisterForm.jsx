@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
-import { Button, TextField, Container, Typography } from "@mui/material";
+import { Button, Container, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
 import { RegisterFormValidation } from "./FormValidation";
 import { GetRegister } from "api/userrequests";
 
 import "./style.scss";
+import EmailField from "../fields/EmailField";
+import PassField from "../fields/PassField";
+import NameField from "components/fields/NameField";
 
 function RegisterForm() {
     const [error, setError] = useState(false);
@@ -24,7 +27,7 @@ function RegisterForm() {
     } = useForm(RegisterFormValidation);
 
     const onSubmit = (data) => {
-        setLoading(true)
+        setLoading(true);
         // console.log(data)
         GetRegister(data)
             .then(function (response) {
@@ -35,14 +38,14 @@ function RegisterForm() {
             .catch(function (error) {
                 console.log(error.response.data);
                 setError(true);
-                setLoading(false)
+                setLoading(false);
             });
     };
 
     return (
         <Container maxWidth="md" className="form">
             <Typography className="title" component="h2">
-                {'Registration Form'}
+                {"Registration Form"}
             </Typography>
             <Box
                 onSubmit={handleSubmit(onSubmit)}
@@ -53,76 +56,39 @@ function RegisterForm() {
                         display: "block",
                         m: "50px auto",
                     },
-                }}                
+                }}
                 // noValidate
                 // autoComplete="off"
-            >                
-                <Controller
-                    name="name"
+            >
+                <NameField error={errors.name} control={control} />
+                <EmailField error={errors.email} control={control} />
+                <PassField
+                    name={"password"}
+                    title={"password"}
+                    error={errors.password}
                     control={control}
-                    render={({ field }) => (
-                        <TextField                           
-                            error={errors.name ? true : false}
-                            label="name"
-                            type="text"
-                            variant="standard"                           
-                            placeholder="your name"
-                            helperText={errors.name?.message}
-                            autoComplete='name'
-                            {...field}
-                        />
-                    )}
-                />
-                <Controller
-                    name="email"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField                            
-                            error={errors.email ? true : false}
-                            label="email"
-                            variant="standard"
-                            type="email"
-                            placeholder="your email"
-                            helperText={errors.email?.message}
-                            autoComplete='email'
-                            {...field}
-                        />
-                    )}
-                />
-                <Controller
-                    name="password"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField                            
-                            error={errors.password ? true : false}
-                            label="password"
-                            variant="standard"
-                            type="password"
-                            placeholder="enter password"
-                            helperText={errors.password?.message}
-                            {...field}
-                        />
-                    )}
                 />
                 <Button
                     disabled={!isValid}
                     className="submit_button"
                     type="submit"
                 >
-                    {'Register'}
+                    {"Register"}
                 </Button>
             </Box>
-            {error && 
-            <Typography className="error_title">
+            {error && (
+                <Typography className="error_title">
                     {"Can't register user"}
-            </Typography>
-            }
+                </Typography>
+            )}
             <Typography className="loading_title">
-                        {loading ? "Registered..." : ""}
-                    </Typography>
-            <Typography className="subtitle">{'Already have account?'}</Typography>
+                {loading ? "Registered..." : ""}
+            </Typography>
+            <Typography className="subtitle">
+                {"Already have account?"}
+            </Typography>
             <Button className="submit_button" component={Link} to="/login">
-                {'Login'}
+                {"Login"}
             </Button>
         </Container>
     );

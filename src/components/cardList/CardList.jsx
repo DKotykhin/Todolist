@@ -115,12 +115,12 @@ const CardList = ({ taskdata }) => {
                     color="text.secondary"
                     sx={{ fontSize: "18px", mt: 1, textAlign: "center" }}
                 >
-                    {taskdata.length
-                        ? `Total amount: ${taskdata.length}`
+                    {newTaskdata.length
+                        ? `Total amount: ${newTaskdata.length}`
                         : "No cards"}
                 </Typography>
             )}
-            {taskdata.length > 1 && (
+            {newTaskdata.length > 1 && (
                 <>
                     <FieldSort onSelect={FieldSelect} />
                     <AZSort onSelect={AZSelect} />

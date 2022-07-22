@@ -2,7 +2,7 @@ import { Controller } from "react-hook-form";
 
 import { TextField } from "@mui/material";
 
-const FormField = (props) => {
+const TaskField = (props) => {
     const { name, control, error, maxRows, placeholder } = props;
     return (
         <Controller
@@ -26,4 +26,4 @@ const FormField = (props) => {
     );
 };
 
-export default FormField;
+export default TaskField;

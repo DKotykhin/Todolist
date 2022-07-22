@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
-import { Button, TextField, Container, Typography } from "@mui/material";
+import { Button, Container, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
 import { UpdateUser } from "api/userrequests";
@@ -10,12 +10,13 @@ import { PasswordFormValidation } from "./FormValidation";
 import { selectUser } from "store/selectors";
 
 import "./style.scss";
+import PassField from "components/fields/PassField";
 
 function PasswordForm() {
     const { userdata } = useSelector(selectUser);
-    const [error, setError] = useState(false)
-    const [success, setSuccess] = useState(false)
-    const [matchPass, setMatchPass] = useState(false)
+    const [error, setError] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [matchPass, setMatchPass] = useState(false);
 
     const {
         control,
@@ -25,29 +26,29 @@ function PasswordForm() {
     } = useForm(PasswordFormValidation);
 
     const onSubmit = (data) => {
-        if (data.password === data.confirmpassword) {           
-            setMatchPass(false)
-            const newData = { password: data.confirmpassword }
+        if (data.password === data.confirmpassword) {
+            setMatchPass(false);
+            const newData = { password: data.confirmpassword };
             UpdateUser(newData, userdata.token)
-                .then(function (response) {                    
+                .then(function (response) {
                     reset();
-                    setSuccess(true)                    
-                    // console.log("New data: ", response.data);                
+                    setSuccess(true);
+                    // console.log("New data: ", response.data);
                 })
                 .catch(function (error) {
                     console.log(error.message);
-                    setError(true)
-                });        
+                    setError(true);
+                });
         } else {
-            console.log('don`t match', data)
-            setMatchPass(true)
+            console.log("don`t match", data);
+            setMatchPass(true);
         }
     };
 
     return (
         <Container maxWidth="md" className="form">
             <Typography className="title" component="h2">
-                {'Change password'}
+                {"Change password"}
             </Typography>
             <Box
                 onSubmit={handleSubmit(onSubmit)}
@@ -62,35 +63,17 @@ function PasswordForm() {
                 noValidate
                 autoComplete="off"
             >
-                <Controller
-                    name="password"
+                <PassField
+                    name={"password"}
+                    title={"password"}
+                    error={errors.password}
                     control={control}
-                    render={({ field }) => (
-                        <TextField                            
-                            error={errors.password ? true : false}
-                            label="password"
-                            variant="outlined"
-                            type="password"
-                            placeholder="password"
-                            helperText={errors.password?.message}
-                            {...field}
-                        />
-                    )}
                 />
-                <Controller
-                    name="confirmpassword"
+                <PassField
+                    name={"confirmpassword"}
+                    title={"confirm password"}
+                    error={errors.confirmpassword}
                     control={control}
-                    render={({ field }) => (
-                        <TextField                            
-                            error={errors.confirmpassword ? true : false}
-                            label="confirm password"
-                            variant="outlined"
-                            type="password"
-                            placeholder="confirm password"
-                            helperText={errors.confirmpassword?.message}
-                            {...field}
-                        />
-                    )}
                 />
                 <Button
                     disabled={!isValid}
@@ -100,25 +83,21 @@ function PasswordForm() {
                     Change password
                 </Button>
             </Box>
-            {error && 
+            {error && (
                 <Typography className="error_title">
-                        {'Incorrect data!'}
+                    {"Incorrect data!"}
                 </Typography>
-            }
-            {matchPass && 
+            )}
+            {matchPass && (
                 <Typography className="error_title">
-                        {"Passwords don't match!"}
+                    {"Passwords don't match!"}
                 </Typography>
-            }
-            {success &&
-                <Typography 
-                    className="subtitle" 
-                    color={'primary'}
-                >
+            )}
+            {success && (
+                <Typography className="subtitle" color={"primary"}>
                     {"Password successfully changed!"}
                 </Typography>
-            }
-            
+            )}
         </Container>
     );
 }
