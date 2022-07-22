@@ -16,6 +16,7 @@ import Password from "pages/Password";
 // const Home = lazy(() => import("pages/Home"));
 // const Login = lazy(() => import("pages/Login"));
 // const Profile = lazy(() => import("pages/Profile"));
+// const Password = lazy(() => import("pages/Password"));
 // const Registration = lazy(() => import("pages/Registration"));
 // const Page404 = lazy(() => import("pages/Page404"));
 

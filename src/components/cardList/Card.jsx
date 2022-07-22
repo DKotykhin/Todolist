@@ -8,6 +8,8 @@ import {
     Divider,
 } from "@mui/material";
 
+import { parseData } from "helpers/formTextData";
+
 const bull = (
     <Box component="span" sx={{ display: "inline", mx: "3px" }}>
         &bull;
@@ -20,10 +22,7 @@ export default function BasicCard({
     handleComplete,
     handleUpdate,
 }) {
-    const title = props.description.split("&#9000;")[0];
-    const subtitle = props.description.split("&#9000;")[1];
-    const desc = props.description.split("&#9000;")[2];
-    const date = props.description.split("&#9000;")[3];
+    const { title, subtitle, desc, date } = parseData(props);
 
     const msLeft = Date.parse(date) - Date.parse(new Date());
     const daysLeft = Math.floor(msLeft / (1000 * 60 * 60 * 24)) + 1;
@@ -45,7 +44,7 @@ export default function BasicCard({
                     sx={[
                         props.completed
                             ? { backgroundColor: "rgb(0, 161, 182, 0.5)" }
-                            : daysLeft < 2 && daysLeft >=0
+                            : daysLeft < 2 && daysLeft >= 0
                             ? { backgroundColor: "rgb(255, 165, 0, 0.5)" }
                             : daysLeft < 0
                             ? { backgroundColor: "rgb(255, 0, 0, 0.5)" }

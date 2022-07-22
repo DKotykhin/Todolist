@@ -3,13 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 
 import PropTypes from "prop-types";
 
-import { Box, Typography, Tab, Tabs, Container } from "@mui/material";
+import { Box, Tab, Tabs, Container } from "@mui/material";
 
 import { GetAllTasks } from "api/taskrequests";
 import { createTasks } from "store/taskSlice";
 import { selectUser, selectTask } from "store/selectors";
 
 import CardList from "components/cardList/CardList";
+import Spinner from "components/spinner/Spinner";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -47,7 +48,7 @@ function a11yProps(index) {
 export default function TaskList() {
     const [value, setValue] = useState(0);
     const [loading, setLoading] = useState(false);
-    
+
     const { userdata } = useSelector(selectUser);
     const { taskdata } = useSelector(selectTask);
     const dispatch = useDispatch();
@@ -66,10 +67,10 @@ export default function TaskList() {
             .catch(function (error) {
                 console.log(error.response.data);
             });
-    },[dispatch, userdata.token])
+    }, [dispatch, userdata.token]);
 
     useEffect(() => {
-        loadData()
+        loadData();
     }, [loadData]);
 
     const handleChange = (event, newValue) => {
@@ -77,32 +78,42 @@ export default function TaskList() {
     };
 
     return (
-        <Container maxWidth='xl'>            
-            {loading && (
-                <Typography sx={{ textAlign: "center", marginTop: '50px', fontSize: '22px' }}>
-                    Loading...
-                </Typography>
+        <Container maxWidth="xl">
+            {loading ? (
+                // <Typography sx={{ textAlign: "center", marginTop: '50px', fontSize: '22px' }}>
+                //     Loading...
+                // </Typography>
+                <Spinner />
+            ) : (
+                <>
+                    <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                        <Tabs
+                            value={value}
+                            onChange={handleChange}
+                            aria-label="basic tabs example"
+                        >
+                            <Tab label="All" {...a11yProps(0)} />
+                            <Tab label="Active" {...a11yProps(1)} />
+                            <Tab label="Done" {...a11yProps(2)} />
+                        </Tabs>
+                    </Box>
+                    <TabPanel value={value} index={0}>
+                        <CardList title={"All Tasks"} taskdata={taskdata} />
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                        <CardList
+                            title={"Active Tasks"}
+                            taskdata={activeTasks}
+                        />
+                    </TabPanel>
+                    <TabPanel value={value} index={2}>
+                        <CardList
+                            title={"Completed Tasks"}
+                            taskdata={completedTasks}
+                        />
+                    </TabPanel>
+                </>
             )}
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    aria-label="basic tabs example"
-                >
-                    <Tab label="All" {...a11yProps(0)} />
-                    <Tab label="Active" {...a11yProps(1)} />
-                    <Tab label="Done" {...a11yProps(2)} />
-                </Tabs>
-            </Box>
-            <TabPanel value={value} index={0}>
-                <CardList title={"All Tasks"} taskdata={taskdata} />               
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-                <CardList title={"Active Tasks"} taskdata={activeTasks} />
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-                <CardList title={"Completed Tasks"} taskdata={completedTasks} />
-            </TabPanel>
         </Container>
     );
 }

@@ -17,6 +17,7 @@ import { addTask } from "store/taskSlice";
 import { selectUser } from "store/selectors";
 import { AddTaskFormValidation } from "components/userForms/FormValidation";
 import TaskField from "../fields/TaskField";
+import { collectData } from "helpers/formTextData";
 
 import "./style.scss";
 
@@ -40,18 +41,8 @@ function AddTaskForm({ handleClose }) {
         return () => clearTimeout(timer);
     }, [loaded]);
 
-    const onSubmit = (data) => {
-        // console.log(data)
-        const newData = {
-            description: data.title.concat(
-                "&#9000;",
-                data.subtitle ? data.subtitle : "",
-                "&#9000;",
-                data.description ? data.description : "",
-                "&#9000;",
-                data.date ? data.date : ""
-            ),
-        };
+    const onSubmit = (data) => {        
+        const newData = collectData(data)
         setLoading(true);
         AddTask(newData, userdata.token)
             .then(function (response) {

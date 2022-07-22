@@ -18,23 +18,10 @@ import { updateTaskAll } from "store/taskSlice";
 import { selectUser } from "store/selectors";
 import { AddTaskFormValidation } from "components/userForms/FormValidation";
 import TaskField from "../fields/TaskField";
+import { collectData, parseData } from "helpers/formTextData";
 
 import "./style.scss";
 
-const transformData = (data) => {
-    const newData = {
-        description: data.title.concat(
-            "&#9000;",
-            data.subtitle ? data.subtitle : "",
-            "&#9000;",
-            data.desc ? data.desc : "",
-            "&#9000;",
-            data.date ? data.date : ""
-        ),
-        completed: data.completed || false,
-    };
-    return newData
-}
 
 function UpdateTaskForm({ props, handleClose }) {
     const { userdata } = useSelector(selectUser);
@@ -48,10 +35,7 @@ function UpdateTaskForm({ props, handleClose }) {
         formState: { errors, isValid },
     } = useForm(AddTaskFormValidation);
 
-    const title = props.description.split("&#9000;")[0];
-    const subtitle = props.description.split("&#9000;")[1];
-    const desc = props.description.split("&#9000;")[2];
-    const date = props.description.split("&#9000;")[3];
+    const { title, subtitle, desc, date } = parseData(props)
 
     useEffect(() => {
         reset({
@@ -63,7 +47,7 @@ function UpdateTaskForm({ props, handleClose }) {
     }, [desc, reset, subtitle, title, date]);
 
     const onSubmit = (data) => {
-        const newData = transformData(data)
+        const newData = collectData(data)
         setLoading(true);
         UpdateTask(newData, userdata.token, props._id)
             .then(function (response) {

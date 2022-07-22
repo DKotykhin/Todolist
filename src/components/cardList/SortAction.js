@@ -4,7 +4,7 @@ const SortAction = (taskdata, data, sort) => {
         a.createdAt < b.createdAt ? 1 : -1
     );
     const deadlineA = [...taskdata].sort((a, b) =>
-        a.description.split("&#9000;")[3] < b.description.split("&#9000;")[3] ? 1 : -1
+        a.description.split("&#9000;")[3] > b.description.split("&#9000;")[3] ? 1 : -1
     );
     const titleA = [...taskdata].sort((a, b) =>
         a.description > b.description ? 1 : -1
@@ -13,7 +13,7 @@ const SortAction = (taskdata, data, sort) => {
         a.createdAt > b.createdAt ? 1 : -1
     );
     const deadlineZ = [...taskdata].sort((a, b) =>
-        a.description.split("&#9000;")[3] > b.description.split("&#9000;")[3] ? 1 : -1
+        a.description.split("&#9000;")[3] < b.description.split("&#9000;")[3] ? 1 : -1
     );
     const titleZ = [...taskdata].sort((a, b) =>
         a.description < b.description ? 1 : -1
