@@ -52,7 +52,7 @@ function RegisterForm() {
                 component="form"
                 sx={{
                     "& > :not(style)": {
-                        width: "30ch",
+                        width: "300px",
                         display: "block",
                         m: "50px auto",
                     },
