@@ -41,7 +41,7 @@ function AddTaskForm({ handleClose }) {
         return () => clearTimeout(timer);
     }, [loaded]);
 
-    const onSubmit = (data) => {        
+    const onSubmit = (data) => {       
         const newData = collectData(data)
         setLoading(true);
         AddTask(newData, userdata.token)
@@ -84,7 +84,7 @@ function AddTaskForm({ handleClose }) {
                     placeholder={"...add subtitle"}
                 />                
                 <TaskField
-                    name={"description"}
+                    name={"desc"}
                     control={control}                    
                     maxRows={4}
                     placeholder={"...add description"}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Box, Container, Typography, Grid, Modal } from "@mui/material";
+import { Box, Container, Typography, Grid } from "@mui/material";
 
 import { DeleteTask, UpdateTask } from "api/taskrequests";
 import { removeTask, updateTaskCompleted } from "store/taskSlice";
@@ -9,24 +9,10 @@ import { selectUser } from "store/selectors";
 
 import BasicCard from "components/cardList/Card";
 import AddTaskModal from "components/taskForms/AddTaskModal";
-import UpdateTaskForm from "components/taskForms/UpdateTaskForm";
 import FieldSort from "components/cardSort/FieldSort";
-import SortAction from "./SortAction";
 import AZSort from "components/cardSort/AZSort";
-
-const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "80%",
-    maxWidth: 500,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    borderRadius: '20px',
-    boxShadow: 24,
-    p: 2,
-};
+import UpdateTaskModal from "components/taskForms/UpdateTaskModal";
+import SortAction from "./SortAction";
 
 const CardList = ({ taskdata }) => {
     const [loading, setLoading] = useState(false);
@@ -88,19 +74,11 @@ const CardList = ({ taskdata }) => {
 
     return (
         <Container maxWidth="xl">
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <UpdateTaskForm
-                        props={cardData}
-                        handleClose={handleClose}
-                    />
-                </Box>
-            </Modal>
+            <UpdateTaskModal
+                props={cardData}
+                openModal={open}
+                closeModal={handleClose}
+            />
             <Box sx={{ textAlign: "center" }}>
                 <AddTaskModal />
             </Box>

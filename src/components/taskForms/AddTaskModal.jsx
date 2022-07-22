@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Box, Button, Modal } from "@mui/material";
 
 import AddTaskForm from "./AddTaskForm";
@@ -18,7 +18,7 @@ const style = {
 };
 
 export default function AddTaskModal() {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
 
     const handleClose = () => {
@@ -32,9 +32,7 @@ export default function AddTaskModal() {
             </Button>
             <Modal
                 open={open}
-                onClose={handleClose}
-                // aria-labelledby="modal-modal-title"
-                // aria-describedby="modal-modal-description"                
+                onClose={handleClose}                               
             >
                 <Box sx={style}>
                     <AddTaskForm handleClose={handleClose} />

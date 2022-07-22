@@ -47,7 +47,9 @@ function UpdateTaskForm({ props, handleClose }) {
     }, [desc, reset, subtitle, title, date]);
 
     const onSubmit = (data) => {
+        console.log(data)
         const newData = collectData(data)
+        console.log(newData)
         setLoading(true);
         UpdateTask(newData, userdata.token, props._id)
             .then(function (response) {
@@ -78,7 +80,7 @@ function UpdateTaskForm({ props, handleClose }) {
                     maxRows={2}
                 />
                 <TaskField name={"subtitle"} control={control} maxRows={2} />
-                <TaskField name={"description"} control={control} maxRows={4} />
+                <TaskField name={"desc"} control={control} maxRows={4} />
                 <InputLabel className="date_label">
                     Deadline
                     <Controller
