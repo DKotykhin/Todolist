@@ -16,7 +16,7 @@ const TaskField = (props) => {
                     helperText={error?.message}
                     multiline
                     maxRows={maxRows}
-                    label={name}
+                    label={name === 'desc' ? 'description' : name}
                     variant="outlined"
                     type="text"
                     placeholder={placeholder}

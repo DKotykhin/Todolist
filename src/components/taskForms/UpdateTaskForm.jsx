@@ -46,10 +46,8 @@ function UpdateTaskForm({ props, handleClose }) {
         });
     }, [desc, reset, subtitle, title, date]);
 
-    const onSubmit = (data) => {
-        console.log(data)
-        const newData = collectData(data)
-        console.log(newData)
+    const onSubmit = (data) => {        
+        const newData = collectData(data)        
         setLoading(true);
         UpdateTask(newData, userdata.token, props._id)
             .then(function (response) {

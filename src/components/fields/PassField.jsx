@@ -15,7 +15,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const PassField = (props) => {
-    const { name, title, error, control } = props;
+    const { name, error, control } = props;
     const [showPass, setShowPass] = useState(false);
 
     const handleClickShowPassword = () => {
@@ -28,7 +28,9 @@ const PassField = (props) => {
     return (
         <Box>
             <FormControl sx={{ width: "300px" }}>
-                <InputLabel>{title}</InputLabel>
+                <InputLabel>
+                    {name === "confirmpassword" ? "confirm password" : name}
+                </InputLabel>
                 <Controller
                     name={name}
                     control={control}

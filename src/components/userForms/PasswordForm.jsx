@@ -64,14 +64,12 @@ function PasswordForm() {
                 autoComplete="off"
             >
                 <PassField
-                    name={"password"}
-                    title={"password"}
+                    name={"password"}                    
                     error={errors.password}
                     control={control}
                 />
                 <PassField
-                    name={"confirmpassword"}
-                    title={"confirm password"}
+                    name={"confirmpassword"}                    
                     error={errors.confirmpassword}
                     control={control}
                 />

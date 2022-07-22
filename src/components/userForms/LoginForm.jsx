@@ -87,8 +87,7 @@ function LoginForm() {
                     >
                         <EmailField error={errors.email} control={control} />
                         <PassField
-                            name={"password"}
-                            title={"password"}
+                            name={"password"}                           
                             error={errors.password}
                             control={control}
                         />

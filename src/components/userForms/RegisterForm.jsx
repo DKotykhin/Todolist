@@ -63,8 +63,7 @@ function RegisterForm() {
                 <NameField error={errors.name} control={control} />
                 <EmailField error={errors.email} control={control} />
                 <PassField
-                    name={"password"}
-                    title={"password"}
+                    name={"password"}                    
                     error={errors.password}
                     control={control}
                 />
