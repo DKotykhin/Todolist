@@ -17,7 +17,7 @@ const TaskField = (props) => {
                     multiline
                     maxRows={maxRows}
                     label={name === 'desc' ? 'description' : name}
-                    variant="outlined"
+                    variant="standard"
                     type="text"
                     placeholder={placeholder}
                 />

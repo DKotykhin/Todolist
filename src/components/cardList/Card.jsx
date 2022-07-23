@@ -7,6 +7,8 @@ import {
     Typography,
     Divider,
 } from "@mui/material";
+import SubjectIcon from "@mui/icons-material/Subject";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
 import { parseData } from "helpers/formTextData";
 
@@ -65,24 +67,32 @@ export default function BasicCard({
                     {subtitle}
                 </Typography>
                 <Divider sx={{ mb: 1 }} />
-                <Typography
-                    variant="body2"
-                    sx={{ minHeight: "60px", wordWrap: "break-word" }}
-                >
-                    {desc}
-                </Typography>
-                <Divider sx={{ mb: 1 }} />
-                <Typography variant="body2" color="text.secondary">
-                    {"Created: "}
-                    {new Date(`${props.createdAt}`).toLocaleString()}
-                </Typography>
-                {date && (
-                    <Typography variant="body2" color="text.secondary">
-                        {"Deadline: "}
-                        {new Date(date).toLocaleDateString()} &rarr;
-                        {` Left: ${daysLeft} days`}
+                <Box sx={{ display: "flex" }}>
+                    <SubjectIcon sx={{ mr: 1 }} />
+                    <Typography
+                        variant="body2"
+                        sx={{ minHeight: "60px", wordBreak: "break-all" }}
+                    >
+                        {desc}
                     </Typography>
-                )}
+                </Box>
+                <Divider sx={{ my: 1 }} />
+                <Box sx={{ display: "flex" }}>
+                    <AccessTimeIcon sx={{ mr: 1 }} />
+                    <Box>
+                        <Typography variant="body2" color="text.secondary">
+                            {"Created: "}
+                            {new Date(`${props.createdAt}`).toLocaleString()}
+                        </Typography>
+                        {date && (
+                            <Typography variant="body2" color="text.secondary">
+                                {"Deadline: "}
+                                {new Date(date).toLocaleDateString()} &rarr;
+                                {` Left: ${daysLeft} days`}
+                            </Typography>
+                        )}
+                    </Box>
+                </Box>
             </CardContent>
             <CardActions
                 sx={{ display: "flex", justifyContent: "space-around" }}
