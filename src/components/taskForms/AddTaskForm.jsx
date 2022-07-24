@@ -50,7 +50,8 @@ function AddTaskForm({ handleClose }) {
                 reset({
                     title: "",
                     subtitle: "",
-                    description: "",
+                    desc: "",
+                    date: ""
                 });
                 setLoading(false);
                 setLoaded(true);

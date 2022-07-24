@@ -1,0 +1,10 @@
+.modal_close {
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    color: #808080;
+    cursor: pointer;
+    &:hover {
+        color: #000;
+    }
+}

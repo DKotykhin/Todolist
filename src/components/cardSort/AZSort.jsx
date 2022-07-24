@@ -18,7 +18,7 @@ const AZSort = ({ onSelect }) => {
             sx={{
                 display: "flex",
                 flexWrap: "wrap",
-                mt: 2,
+                // mt: 2,
                 justifyContent: "center",
             }}
         >

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Box, Container, Typography, Grid } from "@mui/material";
@@ -7,34 +7,43 @@ import { DeleteTask, UpdateTask } from "api/taskrequests";
 import { removeTask, updateTaskCompleted } from "store/taskSlice";
 import { selectUser } from "store/selectors";
 
-import BasicCard from "components/cardList/Card";
+import ShortCard from "components/card/ShortCard";
 import AddTaskModal from "components/taskForms/AddTaskModal";
 import FieldSort from "components/cardSort/FieldSort";
 import AZSort from "components/cardSort/AZSort";
 import UpdateTaskModal from "components/taskForms/UpdateTaskModal";
 import SortAction from "./SortAction";
+import FullCardModal from "components/card/FullCardModal";
 
 const CardList = ({ taskdata }) => {
     const [loading, setLoading] = useState(false);
-    const [cardData, setCardData] = useState([]);
+    const [cardUpdateData, setCardUpdateData] = useState([]);
     const [newTaskdata, setNewTaskdata] = useState([]);
     const [sortOrder, setSortOrder] = useState("A-z");
     const [sortField, setSortField] = useState("created");
-    const [open, setOpen] = useState(false);
+    const [updateFormOpen, setUpdateFormOpen] = useState(false);
+    const [cardFullOpen, setCardFullOpen] = useState(false);
+    const [cardFullDataId, setCardFullDataId] = useState(null);
 
     const { userdata } = useSelector(selectUser);
     const dispatch = useDispatch();
 
+    const newcardFullData = taskdata.filter(
+        (task) => task._id === cardFullDataId
+    );
+
     useEffect(() => {
         setNewTaskdata(SortAction(taskdata, sortField, sortOrder));
     }, [sortField, sortOrder, taskdata]);
+    // const newTaskdata = SortAction(taskdata, sortField, sortOrder)
 
-    const handleClose = () => {
-        setOpen(false);
+    const updateFormClose = () => {
+        setUpdateFormOpen(false);
     };
 
     const handleDelete = (id) => {
         setLoading(true);
+        setCardFullOpen(false);
         DeleteTask(userdata.token, id)
             .then(function (response) {
                 // console.log('Delete task response: ', response.data);
@@ -61,8 +70,8 @@ const CardList = ({ taskdata }) => {
     };
 
     const handleUpdate = (data) => {
-        setOpen(true);
-        setCardData(data);
+        setUpdateFormOpen(true);
+        setCardUpdateData(data);
     };
 
     const FieldSelect = (data) => {
@@ -72,26 +81,43 @@ const CardList = ({ taskdata }) => {
         setSortOrder(data);
     };
 
+    const handleOpen = (data) => {
+        setCardFullOpen(true);
+        setCardFullDataId(data);
+    };
+
+    const fullCardClose = () => {
+        setCardFullOpen(false);
+    };
+
     return (
         <Container maxWidth="xl">
             <UpdateTaskModal
-                props={cardData}
-                openModal={open}
-                closeModal={handleClose}
+                props={cardUpdateData}
+                openModal={updateFormOpen}
+                closeModal={updateFormClose}
+            />
+            <FullCardModal
+                props={newcardFullData[0]}
+                openModal={cardFullOpen}
+                closeModal={fullCardClose}
+                handleDelete={() => handleDelete(newcardFullData[0]._id)}
+                handleComplete={() => handleComplete(newcardFullData[0])}
+                handleUpdate={() => handleUpdate(newcardFullData[0])}
             />
             <Box sx={{ textAlign: "center" }}>
                 <AddTaskModal />
             </Box>
             {loading ? (
                 <Typography
-                    sx={{ fontSize: "18px", mt: 1, textAlign: "center" }}
+                    sx={{ fontSize: "18px", my: 1, textAlign: "center" }}
                 >
                     {"Loading..."}
                 </Typography>
             ) : (
                 <Typography
                     color="text.secondary"
-                    sx={{ fontSize: "18px", mt: 1, textAlign: "center" }}
+                    sx={{ fontSize: "18px", my: 1, textAlign: "center" }}
                 >
                     {newTaskdata.length
                         ? `Total amount: ${newTaskdata.length}`
@@ -114,11 +140,12 @@ const CardList = ({ taskdata }) => {
                                 justifyContent: "center",
                             }}
                         >
-                            <BasicCard
+                            <ShortCard
                                 props={task}
-                                handleDelete={() => handleDelete(task._id)}
-                                handleComplete={() => handleComplete(task)}
-                                handleUpdate={() => handleUpdate(task)}
+                                // handleDelete={() => handleDelete(task._id)}
+                                // handleComplete={() => handleComplete(task)}
+                                // handleUpdate={() => handleUpdate(task)}
+                                handleOpen={() => handleOpen(task._id)}
                             />
                         </Box>
                     </Grid>
